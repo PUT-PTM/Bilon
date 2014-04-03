@@ -1,0 +1,22 @@
+BiloCopter
+==========
+
+Problematyka 
+------------
+[01-04-2014 - 03-04-2014]
+Gotowy kod wykonany przez kolegów, działa błędnie.
+Na załączonych print screenach widać to wyraźnie:
+- [zjdecie1][screen1] minIMU zostało unieruchomione
+pomimo to wyniki pomiarów rozjeżdżają się.
+- [zdjecie2][screen2] obracamy modułem o 90 stopni wokół osi X(Roll),
+odwzorowanie na wykresie nie przypomina tego.
+
+Co może być źle?
+----------------
+Żyroskop z minIMU (L3GD20) zwraca wartość w stopniach
+filtr Madgwick dokonuje obliczeń na radianach, nie jest 
+to uwzględnione w implementacji projektu.
+
+Wątpliwa jest jakość konwersji kwaternionów na kąty eulera [słaba dokładność]
+// Nadal nie działa ...
+<- Co robić ?

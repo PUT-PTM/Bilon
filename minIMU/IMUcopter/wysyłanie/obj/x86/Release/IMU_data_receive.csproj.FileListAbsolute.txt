@@ -1,0 +1,27 @@
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\bin\Release\IMU_data_receive.exe
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\bin\Release\IMU_data_receive.pdb
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\wysyłanie.Form1.resources
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.Properties.Resources.resources
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.exe
+C:\Documents and Settings\Viz\Pulpit\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.pdb
+C:\Users\Adrian\Desktop\IMU\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.exe
+C:\Users\Adrian\Desktop\IMU\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.pdb
+C:\Users\Adrian\Desktop\IMU\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\bin\Release\IMU_data_receive.exe
+C:\Users\Adrian\Desktop\IMU\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\bin\Release\IMU_data_receive.pdb
+C:\Users\Adrian\Desktop\IMU\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.csprojResolveAssemblyReference.cache
+C:\Users\Adrian\Desktop\IMU\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\wysyłanie.Form1.resources
+C:\Users\Adrian\Desktop\IMU\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.Properties.Resources.resources
+C:\Users\Adrian\Desktop\IMU\IMU\IMU_data_receive_GUI\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.csproj.GenerateResource.Cache
+C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.exe
+C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.pdb
+C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\bin\Release\IMU_data_receive.exe
+C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\bin\Release\IMU_data_receive.pdb
+C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.csprojResolveAssemblyReference.cache
+C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\wysyłanie.Form1.resources
+C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.Properties.Resources.resources
+C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.csproj.GenerateResource.Cache
+C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\obj\x86\Release\IMU_data_receive.exe
+C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\obj\x86\Release\IMU_data_receive.pdb
