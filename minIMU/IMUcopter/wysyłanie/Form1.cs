@@ -132,8 +132,8 @@ namespace wysyłanie
                         {
                             gx = text.Substring(2);
                             fgx = float.Parse(gx);
-                            this.richTextBox7.AppendText(gx);
-                            this.richTextBox7.ScrollToCaret();
+                            this.richTextBox9.AppendText(gx);
+                            this.richTextBox9.ScrollToCaret();
                             STM32_DataReceived_updateAHRS(fgx, fgy, fgz, fax, fay, faz, fmx, fmy, fmz);
                             break;
                         }
@@ -150,8 +150,8 @@ namespace wysyłanie
                         {
                             gz = text.Substring(2);
                             fgz = float.Parse(gz);
-                            this.richTextBox9.AppendText(gz);
-                            this.richTextBox9.ScrollToCaret();
+                            this.richTextBox7.AppendText(gz);
+                            this.richTextBox7.ScrollToCaret();
                             STM32_DataReceived_updateAHRS(fgx, fgy, fgz, fax, fay, faz, fmx, fmy, fmz);
                             
                             loop++;

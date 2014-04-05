@@ -25,3 +25,9 @@ C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data
 C:\Users\Adrian\Desktop\IMU_data_receive_GUI\wysyłanie\obj\x86\Release\IMU_data_receive.csproj.GenerateResource.Cache
 C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\obj\x86\Release\IMU_data_receive.exe
 C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\obj\x86\Release\IMU_data_receive.pdb
+C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\bin\Release\IMU_data_receive.exe
+C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\bin\Release\IMU_data_receive.pdb
+C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\obj\x86\Release\IMU_data_receive.csprojResolveAssemblyReference.cache
+C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\obj\x86\Release\wysyłanie.Form1.resources
+C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\obj\x86\Release\IMU_data_receive.Properties.Resources.resources
+C:\Users\Adrian\Documents\GitHub\Bilon\minIMU\IMUcopter\wysyłanie\obj\x86\Release\IMU_data_receive.csproj.GenerateResource.Cache
