@@ -8,3 +8,9 @@ http://elabz.com/brushless-dc-motor-with-arduino/
 http://blog.spingarage.com/58108473
 http://what-when-how.com/electric-mo...lectric-motor/
 http://www.bavaria-direct.co.za/models/motor_info.htm
+
+
+BEMF
+http://bldc.wikidot.com/bldc-and-8051
+http://ww1.microchip.com/downloads/e...tes/01160A.pdf
+http://cache.freescale.com/files/product/doc/AN1913.pdf
