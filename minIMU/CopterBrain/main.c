@@ -3,9 +3,12 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_i2c.h"
 
-#define LSM303DL_A_ADDRESS 0x30  // adres akcelerometru
-#define LSM303DL_M_ADDRESS 0x3C  // adres magnetometru
-#define LSM303DL_G_ADDRESS 0xD2  // adres zyroskopu
+#define GYRO_ADDRESS 0xD2	 // adres zyroskopu
+#define ACCEL_ADDRESS 0x30	 // adres akcelerometru
+#define COMPASS_ADDRESS 0x3C // adres magnetometru
+
+// i co z tymi globalsami
+int gx,gy,gz,ax,ay,az,mx,my,mz;
 
 void I2C1_init(void);
 void I2C_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction);
@@ -14,10 +17,9 @@ uint8_t I2C_read_ack(I2C_TypeDef* I2Cx);
 uint8_t I2C_read_nack(I2C_TypeDef* I2Cx);
 void I2C_stop(I2C_TypeDef* I2Cx);
 
-Read_Gyro();   // This read gyro data
-Read_Accel();     // Read I2C accelerometer
-Read_Compass();
-
+void Read_Gyro();
+void Read_Accel();
+void Read_Compass();
 
 int main(void)
 {
@@ -26,9 +28,11 @@ int main(void)
 
 	I2C1_init();
 
-	uint8_t received_data;
 
 /*
+	uint8_t received_data;
+
+
 	I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Transmitter); // start a transmission in Master transmitter mode
 	I2C_write(I2C1, 0x01); // write one byte to the slave
 	I2C_stop(I2C1); // stop the transmission
@@ -36,7 +40,7 @@ int main(void)
 	I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Receiver); // start a transmission in Master receiver mode
 	received_data = I2C_read_nack(I2C1); // read one byte and don't request another byte, stop transmission
 
-	*/
+*/
 
 	/* GPIOD Periph clock enable */
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -50,6 +54,32 @@ int main(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
 
+		//zyroskop (Gyro)
+		I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
+			I2C_write(I2C1, 0x20);   // L3G_CTRL_REG1 0x20
+			I2C_write(I2C1, 0x0F);   // 0x0F = 0b00001111
+									 // ODR 100Hz Cut-off 12.5
+				  	  	  	  	     // Normal power mode, all axes enabled
+		I2C_stop(I2C1);
+
+		//akcelerometr (Accel)
+		I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1,0x20);   // LSM303_CTRL_REG1_A  0x20
+			I2C_write(I2C1,0x27);   // Enable Accelerometer
+									// 0x27 = 0b00100111
+									// ODR 50Hz Cut-off 37
+									// Normal power mode, all axes enabled
+		I2C_stop(I2C1);
+
+		//magnetometr (Compass)
+		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
+			I2C_write(I2C1,0x02);	  //LSM303_MR_REG_M   0x02
+			I2C_write(I2C1,0x00);     // Enable Magnetometer
+									  // 0x00 = 0b00000000
+			  	  	  	  	  	  	  // Continuous conversion mode
+		I2C_stop(I2C1);
+
 	unsigned int i;
 
 	for(;;)
@@ -58,6 +88,9 @@ int main(void)
 		for (i=0;i<1000000;i++);
 		GPIO_ResetBits(GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
 		for (i=0;i<1000000;i++);
+		Read_Gyro();
+		Read_Accel();
+		Read_Compass();
 	}
 
 }
@@ -78,7 +111,7 @@ void I2C1_init(void){
 	 * 1. SCL on PB6 or PB8
 	 * 2. SDA on PB7 or PB9
 	 */
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_9; // we are going to use PB6 and PB9
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7; // we are going to use PB6 and PB9
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;			// set pins to alternate function
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;		// set GPIO speed
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;			// set output to open drain --> the line has to be only pulled low, not driven high
@@ -87,7 +120,7 @@ void I2C1_init(void){
 
 	// Connect I2C1 pins to AF
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_I2C1);	// SCL
-	GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_I2C1); // SDA
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_I2C1); // SDA
 
 	// configure I2C1
 	I2C_InitStruct.I2C_ClockSpeed = 100000; 		// 100kHz
@@ -145,9 +178,9 @@ void I2C_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction){
  */
 void I2C_write(I2C_TypeDef* I2Cx, uint8_t data)
 {
+	I2C_SendData(I2Cx, data);
 	// wait for I2C1 EV8 --> last byte is still being transmitted (last byte in SR, buffer empty), next byte can already be written
 	while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTING));
-	I2C_SendData(I2Cx, data);
 }
 
 /* This function reads one byte from the slave device
@@ -188,5 +221,67 @@ void I2C_stop(I2C_TypeDef* I2Cx){
 	// Send I2C1 STOP Condition after last byte has been transmitted
 	I2C_GenerateSTOP(I2Cx, ENABLE);
 	// wait for I2C1 EV8_2 --> byte has been transmitted
-	while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+	//while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+}
+
+
+
+// minIMU
+void Read_Gyro(){
+	I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
+	I2C_write(I2C1, 0x28| (1 << 7) ); //L3G_OUT_X_L   0x28
+	I2C_stop(I2C1);
+	I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Receiver);
+
+		uint8_t xlg = I2C_read_ack(I2C1);
+		uint8_t xhg = I2C_read_ack(I2C1);
+		uint8_t ylg = I2C_read_ack(I2C1);
+		uint8_t yhg = I2C_read_ack(I2C1);
+		uint8_t zlg = I2C_read_ack(I2C1);
+		uint8_t zhg = I2C_read_nack(I2C1);
+
+	//I2C_stop(I2C1);
+
+		gx = (int16_t)(xhg << 8 | xlg);
+		gy = (int16_t)(yhg << 8 | ylg);
+		gz = (int16_t)(zhg << 8 | zlg);
+}
+
+void Read_Accel(){
+	I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
+	I2C_write(I2C1,0x28| (1 << 7));
+	I2C_stop(I2C1);
+	I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Receiver);
+
+		uint8_t xla = I2C_read_ack(I2C1);
+		uint8_t xha = I2C_read_ack(I2C1);
+		uint8_t yla = I2C_read_ack(I2C1);
+		uint8_t yha = I2C_read_ack(I2C1);
+		uint8_t zla = I2C_read_ack(I2C1);
+		uint8_t zha = I2C_read_nack(I2C1);
+
+	//I2C_stop(I2C1);
+		//ax = ((int16_t)(xha << 8 | xla)) >> 4;
+		ax = (int16_t)((xha << 8 | xla)) >> 4;
+		ay = (int16_t)((yha << 8 | yla)) >> 4;
+		az = (int16_t)((zha << 8 | zla)) >> 4;
+}
+
+void Read_Compass(){
+	I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
+	I2C_write(I2C1,0x03); //LSM303_OUT_X_H_M    0x03
+	I2C_stop(I2C1);
+	I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Receiver);
+
+		uint8_t xhm = I2C_read_ack(I2C1);
+		uint8_t xlm = I2C_read_ack(I2C1);
+		uint8_t zhm = I2C_read_ack(I2C1);
+		uint8_t zlm = I2C_read_ack(I2C1);
+		uint8_t yhm = I2C_read_ack(I2C1);
+		uint8_t ylm = I2C_read_nack(I2C1);
+
+	//I2C_stop(I2C1);
+		mx = (int16_t)(xhm << 8 | xlm);
+		my = (int16_t)(yhm << 8 | ylm);
+		mz = (int16_t)(zhm << 8 | zlm);
 }
