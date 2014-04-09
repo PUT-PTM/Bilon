@@ -1,22 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
-   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m4 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F407VG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib\include -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_boot -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain">
-      <target file="stm32f4xx_rcc.o" lastModified="1454345f5a7">
+   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m4 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F407VG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib -I..\..\..\..\..\Users\Adrian -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib\include -I..\..\..\..\..\Users\Adrian\Desktop\MadgwickAHRS -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU -I..\..\..\..\..\Users\Adrian\Desktop -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_boot -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain">
+      <target file="MadgwickAHRS.o" lastModified="14547f1aaa4">
+         <source file="..\..\..\..\..\..\..\..\Desktop\MadgwickAHRS\MadgwickAHRS.c" lastModified="14547eb3120"/>
+      </target>
+      <target file="stm32f4xx_rcc.o" lastModified="14547f1ab8c">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="1453daf402d"/>
       </target>
-      <target file="system_stm32f4xx.o" lastModified="1454345f667">
+      <target file="system_stm32f4xx.o" lastModified="14547f1ac3d">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1453db5486c"/>
       </target>
-      <target file="stm32f4xx_gpio.o" lastModified="1454345f613">
+      <target file="stm32f4xx_gpio.o" lastModified="14547f1abe9">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="1453daedfe1"/>
       </target>
-      <target file="stm32f4xx_i2c.o" lastModified="1454345f6e4">
+      <target file="stm32f4xx_i2c.o" lastModified="14547f1acae">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_i2c.c" lastModified="1453dafc60c"/>
       </target>
-      <target file="main.o" lastModified="1454345f527">
-         <source file="..\..\..\main.c" lastModified="14543447ce6"/>
+      <target file="main.o" lastModified="14547f1ab15">
+         <source file="..\..\..\main.c" lastModified="14547f1a40f"/>
       </target>
-      <target file="startup_stm32f4xx.o" lastModified="1454345f4ba">
+      <target file="startup_stm32f4xx.o" lastModified="14547f1aa29">
          <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="1453daee04f"/>
       </target>
    </processor>

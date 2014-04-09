@@ -1,7 +1,9 @@
+#include <math.h>
 #include "stm32f4xx_conf.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_i2c.h"
+#include "MadgwickAHRS.h"
 
 #define GYRO_ADDRESS 0xD2	 // adres zyroskopu
 #define ACCEL_ADDRESS 0x30	 // adres akcelerometru
@@ -9,6 +11,7 @@
 
 // i co z tymi globalsami
 int gx,gy,gz,ax,ay,az,mx,my,mz;
+float  Roll, Pitch, Yaw;
 
 void I2C1_init(void);
 void I2C_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction);
@@ -21,26 +24,15 @@ void Read_Gyro();
 void Read_Accel();
 void Read_Compass();
 
+float deg2rad(float degrees);
+float rad2deg(float radians);
+
 int main(void)
 {
 	SystemInit();
 	SystemCoreClockUpdate();
 
 	I2C1_init();
-
-
-/*
-	uint8_t received_data;
-
-
-	I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Transmitter); // start a transmission in Master transmitter mode
-	I2C_write(I2C1, 0x01); // write one byte to the slave
-	I2C_stop(I2C1); // stop the transmission
-
-	I2C_start(I2C1, SLAVE_ADDRESS<<1, I2C_Direction_Receiver); // start a transmission in Master receiver mode
-	received_data = I2C_read_nack(I2C1); // read one byte and don't request another byte, stop transmission
-
-*/
 
 	/* GPIOD Periph clock enable */
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -84,13 +76,24 @@ int main(void)
 
 	for(;;)
 	{
+
 		GPIO_SetBits(GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
 		for (i=0;i<1000000;i++);
 		GPIO_ResetBits(GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
 		for (i=0;i<1000000;i++);
+
 		Read_Gyro();
 		Read_Accel();
 		Read_Compass();
+		MadgwickAHRSupdate(deg2rad(gx), deg2rad(gy), deg2rad(gz), ax, ay, az, mx, my, mz);
+
+        float q12 =q1 *q1;
+        float q22 =q2 *q2;
+        float q32 =q3 *q3;
+
+        Roll = rad2deg((float)atan2(2 * (q2 *q3 +q0 *q1), (1 - 2 * (q12 + q22))));
+        Pitch = rad2deg((float)-asin(2 * (q1 *q3 -q0 *q2)));
+        Yaw = rad2deg((float)atan2(2 * (q1 *q2 +q0 *q3), (1 - 2 * (q22 + q32))));
 	}
 
 }
@@ -111,7 +114,7 @@ void I2C1_init(void){
 	 * 1. SCL on PB6 or PB8
 	 * 2. SDA on PB7 or PB9
 	 */
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7; // we are going to use PB6 and PB9
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7; // we are going to use PB6 and PB7
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;			// set pins to alternate function
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;		// set GPIO speed
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;			// set output to open drain --> the line has to be only pulled low, not driven high
@@ -261,7 +264,7 @@ void Read_Accel(){
 		uint8_t zha = I2C_read_nack(I2C1);
 
 	//I2C_stop(I2C1);
-		//ax = ((int16_t)(xha << 8 | xla)) >> 4;
+		// 12 bitowa odpowiedz (przesuniecie o 4 bit w  prawo)
 		ax = (int16_t)((xha << 8 | xla)) >> 4;
 		ay = (int16_t)((yha << 8 | yla)) >> 4;
 		az = (int16_t)((zha << 8 | zla)) >> 4;
@@ -273,6 +276,7 @@ void Read_Compass(){
 	I2C_stop(I2C1);
 	I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Receiver);
 
+		// Kolejnosc kosmos datasheet
 		uint8_t xhm = I2C_read_ack(I2C1);
 		uint8_t xlm = I2C_read_ack(I2C1);
 		uint8_t zhm = I2C_read_ack(I2C1);
@@ -284,4 +288,14 @@ void Read_Compass(){
 		mx = (int16_t)(xhm << 8 | xlm);
 		my = (int16_t)(yhm << 8 | ylm);
 		mz = (int16_t)(zhm << 8 | zlm);
+}
+
+float deg2rad(float degrees)
+{
+    return (float)(M_PI / 180) * degrees;
+}
+
+float rad2deg(float radians)
+{
+    return (radians * 180) / (float)M_PI;
 }
