@@ -3,6 +3,8 @@
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_i2c.h"
+#include "stm32f4xx_tim.h"
+#include "misc.h"
 #include "MadgwickAHRS.h"
 
 #define GYRO_ADDRESS 0xD2	 // adres zyroskopu
@@ -27,6 +29,54 @@ void Read_Compass();
 float deg2rad(float degrees);
 float rad2deg(float radians);
 
+        double a_xBias = 32634.2779917682;            // accelerometer bias
+        double a_yBias = 32300.1140276867;
+        double a_zBias = 32893.0853282136;
+        double a_xGain = -0.00150042985864975;        // accelerometer gains
+        double a_yGain = -0.00147414192905898;
+        double a_zGain = 0.00152294825926844;
+        double w_xBias = 25247;                             // gyroscope bias
+        double w_yBias = 25126;
+        double w_zBias = 24463;
+        double w_xGain = 0.00102058528925813;         // gyroscope gains
+        double w_yGain = -0.00110455853342484;
+        double w_zGain = 0.00107794298635984;
+        double m_xBias = -8.20750399495073;           // magnetometer baises
+        double m_yBias = 15.6531909021474;
+        double m_zBias = 7.32498941411782;
+        double m_xGain = -0.00160372297752976;        // magnetometer gains
+        double m_yGain = 0.0016037818986323;
+        double m_zGain = 0.00182483736430979;
+
+void SysTick_Handler(void)
+{
+	Read_Gyro();
+	Read_Accel();
+	Read_Compass();
+
+	gx = (gx - w_xBias) * w_xGain;
+	gy = (gy - w_yBias) * w_yGain;
+	gz = (gz - w_zBias) * w_zGain;
+
+	ax = (ax - a_xBias) * a_xGain;
+	ay = (ay - a_yBias) * a_yGain;
+	az = (az - a_zBias) * a_zGain;
+
+	mx = (mx - m_xBias) * m_xGain;
+	my = (my - m_yBias) * m_yGain;
+	mz = (mz - m_zBias) * m_zGain;
+
+	MadgwickAHRSupdate(deg2rad(gx), deg2rad(gy), deg2rad(gz), ax, ay, az, mx, my, mz);
+
+    float q12 =q1 *q1;
+    float q22 =q2 *q2;
+    float q32 =q3 *q3;
+
+    Roll = rad2deg((float)atan2(2 * (q2 *q3 +q0 *q1), (1 - 2 * (q12 + q22))));
+    Pitch = rad2deg((float)-asin(2 * (q1 *q3 -q0 *q2)));
+    Yaw = rad2deg((float)atan2(2 * (q1 *q2 +q0 *q3), (1 - 2 * (q22 + q32))));
+}
+
 int main(void)
 {
 	SystemInit();
@@ -49,23 +99,53 @@ int main(void)
 		//zyroskop (Gyro)
 		I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
 			I2C_write(I2C1, 0x20);   // L3G_CTRL_REG1 0x20
-			I2C_write(I2C1, 0x0F);   // 0x0F = 0b00001111
+			I2C_write(I2C1, 0xBF);   // 0x0F = 0b00001111
 									 // ODR 100Hz Cut-off 12.5
-				  	  	  	  	     // Normal power mode, all axes enabled
+									 // Normal power mode, all axes enabled
+
+
+		I2C_stop(I2C1);
+		I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1, 0x23); // CTRL_REG4
+			I2C_write(I2C1, 0x10);
+
 		I2C_stop(I2C1);
 
 		//akcelerometr (Accel)
 		I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
 
 			I2C_write(I2C1,0x20);   // LSM303_CTRL_REG1_A  0x20
-			I2C_write(I2C1,0x27);   // Enable Accelerometer
+			I2C_write(I2C1,0x37);   // Enable Accelerometer
 									// 0x27 = 0b00100111
 									// ODR 50Hz Cut-off 37
 									// Normal power mode, all axes enabled
 		I2C_stop(I2C1);
+		I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
+
+
+			I2C_write(I2C1,0x23);
+			I2C_write(I2C1,0x30);
+
+		I2C_stop(I2C1);
 
 		//magnetometr (Compass)
 		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
+
+
+			I2C_write(I2C1,0x00);
+			I2C_write(I2C1,0x20);
+
+		I2C_stop(I2C1);
+		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1,0x01);
+			I2C_write(I2C1,0x20);
+
+		I2C_stop(I2C1);
+		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
+
+
 			I2C_write(I2C1,0x02);	  //LSM303_MR_REG_M   0x02
 			I2C_write(I2C1,0x00);     // Enable Magnetometer
 									  // 0x00 = 0b00000000
@@ -73,27 +153,12 @@ int main(void)
 		I2C_stop(I2C1);
 
 	unsigned int i;
+	if (SysTick_Config(SystemCoreClock/200))  while (1);
 
 	for(;;)
 	{
-
-		GPIO_SetBits(GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
+		GPIO_ToggleBits (GPIOD, GPIO_Pin_14);
 		for (i=0;i<1000000;i++);
-		GPIO_ResetBits(GPIOD, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
-		for (i=0;i<1000000;i++);
-
-		Read_Gyro();
-		Read_Accel();
-		Read_Compass();
-		MadgwickAHRSupdate(deg2rad(gx), deg2rad(gy), deg2rad(gz), ax, ay, az, mx, my, mz);
-
-        float q12 =q1 *q1;
-        float q22 =q2 *q2;
-        float q32 =q3 *q3;
-
-        Roll = rad2deg((float)atan2(2 * (q2 *q3 +q0 *q1), (1 - 2 * (q12 + q22))));
-        Pitch = rad2deg((float)-asin(2 * (q1 *q3 -q0 *q2)));
-        Yaw = rad2deg((float)atan2(2 * (q1 *q2 +q0 *q3), (1 - 2 * (q22 + q32))));
 	}
 
 }
@@ -126,7 +191,7 @@ void I2C1_init(void){
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_I2C1); // SDA
 
 	// configure I2C1
-	I2C_InitStruct.I2C_ClockSpeed = 100000; 		// 100kHz
+	I2C_InitStruct.I2C_ClockSpeed = 400000; 		// 400kHz
 	I2C_InitStruct.I2C_Mode = I2C_Mode_I2C;			// I2C mode
 	I2C_InitStruct.I2C_DutyCycle = I2C_DutyCycle_2;	// 50% duty cycle --> standard
 	I2C_InitStruct.I2C_OwnAddress1 = 0x00;			// own address, not relevant in master mode
@@ -234,7 +299,7 @@ void Read_Gyro(){
 	I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
 	I2C_write(I2C1, 0x28| (1 << 7) ); //L3G_OUT_X_L   0x28
 	I2C_stop(I2C1);
-	I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Receiver);
+	I2C_start(I2C1, 0xD3, I2C_Direction_Receiver);
 
 		uint8_t xlg = I2C_read_ack(I2C1);
 		uint8_t xhg = I2C_read_ack(I2C1);
@@ -254,7 +319,7 @@ void Read_Accel(){
 	I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
 	I2C_write(I2C1,0x28| (1 << 7));
 	I2C_stop(I2C1);
-	I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Receiver);
+	I2C_start(I2C1, 0x31, I2C_Direction_Receiver);
 
 		uint8_t xla = I2C_read_ack(I2C1);
 		uint8_t xha = I2C_read_ack(I2C1);
@@ -274,7 +339,7 @@ void Read_Compass(){
 	I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
 	I2C_write(I2C1,0x03); //LSM303_OUT_X_H_M    0x03
 	I2C_stop(I2C1);
-	I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Receiver);
+	I2C_start(I2C1, 0x3D, I2C_Direction_Receiver);
 
 		// Kolejnosc kosmos datasheet
 		uint8_t xhm = I2C_read_ack(I2C1);

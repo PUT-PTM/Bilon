@@ -1,14 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="4.8.3 -mcpu=cortex-m4 -mthumb -g -nostartfiles -Map=CopterBrain.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\CopterBrain -TC:\CooCox\CoIDE\configuration\ProgramData\CopterBrain/arm-gcc-link.ld -g -L..\..\.. -lm">
-      <target file="CopterBrain.elf" lastModified="14547f1aecf">
-         <source file="..\obj\startup_stm32f4xx.o" lastModified="14547f1aa29"/>
-         <source file="..\obj\MadgwickAHRS.o" lastModified="14547f1aaa4"/>
-         <source file="..\obj\main.o" lastModified="14547f1ab15"/>
-         <source file="..\obj\stm32f4xx_rcc.o" lastModified="14547f1ab8c"/>
-         <source file="..\obj\stm32f4xx_gpio.o" lastModified="14547f1abe9"/>
-         <source file="..\obj\system_stm32f4xx.o" lastModified="14547f1ac3d"/>
-         <source file="..\obj\stm32f4xx_i2c.o" lastModified="14547f1acae"/>
+      <target file="CopterBrain.elf" lastModified="145638fa69c">
+         <source file="..\obj\stm32f4xx_syscfg.o" lastModified="145638fa00e"/>
+         <source file="..\obj\startup_stm32f4xx.o" lastModified="145638fa046"/>
+         <source file="..\obj\MadgwickAHRS.o" lastModified="145638fa0be"/>
+         <source file="..\obj\main.o" lastModified="145638fa13c"/>
+         <source file="..\obj\stm32f4xx_rcc.o" lastModified="145638fa1b1"/>
+         <source file="..\obj\stm32f4xx_gpio.o" lastModified="145638fa20b"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="145638fa258"/>
+         <source file="..\obj\stm32f4xx_i2c.o" lastModified="145638fa2c5"/>
+         <source file="..\obj\misc.o" lastModified="145638fa311"/>
+         <source file="..\obj\stm32f4xx_rtc.o" lastModified="145638fa3ac"/>
+         <source file="..\obj\stm32f4xx_tim.o" lastModified="145638fa464"/>
       </target>
    </processor>
 </history>

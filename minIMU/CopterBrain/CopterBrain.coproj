@@ -75,7 +75,11 @@
     <Component id="500" name="CMSIS BOOT" path="" type="2"/>
     <Component id="501" name="RCC" path="" type="2"/>
     <Component id="504" name="GPIO" path="" type="2"/>
+    <Component id="506" name="RTC" path="" type="2"/>
     <Component id="510" name="I2C" path="" type="2"/>
+    <Component id="513" name="TIM" path="" type="2"/>
+    <Component id="524" name="MISC" path="" type="2"/>
+    <Component id="526" name="SYSCFG" path="" type="2"/>
   </Components>
   <Files>
     <File name="cmsis_lib/source/stm32f4xx_gpio.c" path="cmsis_lib/source/stm32f4xx_gpio.c" type="1"/>
@@ -84,24 +88,32 @@
     <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
     <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
-    <File name="AHRS/MadgwickAHRS.c" path="../../../../../Desktop/MadgwickAHRS/MadgwickAHRS.c" type="1"/>
-    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
-    <File name="cmsis_boot/startup" path="" type="2"/>
+    <File name="cmsis_lib/include/stm32f4xx_syscfg.h" path="cmsis_lib/include/stm32f4xx_syscfg.h" type="1"/>
+    <File name="AHRS/MadgwickAHRS.c" path="MadgwickAHRS/MadgwickAHRS.c" type="1"/>
     <File name="cmsis/core_cm4_simd.h" path="cmsis/core_cm4_simd.h" type="1"/>
+    <File name="cmsis_boot/startup" path="" type="2"/>
+    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
-    <File name="cmsis/core_cm4.h" path="cmsis/core_cm4.h" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.c" path="cmsis_boot/system_stm32f4xx.c" type="1"/>
+    <File name="cmsis/core_cm4.h" path="cmsis/core_cm4.h" type="1"/>
     <File name="AHRS" path="" type="2"/>
+    <File name="cmsis_lib/source/misc.c" path="cmsis_lib/source/misc.c" type="1"/>
     <File name="cmsis" path="" type="2"/>
+    <File name="cmsis_lib/include/stm32f4xx_tim.h" path="cmsis_lib/include/stm32f4xx_tim.h" type="1"/>
     <File name="cmsis_lib" path="" type="2"/>
     <File name="cmsis_lib/source/stm32f4xx_i2c.c" path="cmsis_lib/source/stm32f4xx_i2c.c" type="1"/>
     <File name="cmsis_lib/source" path="" type="2"/>
+    <File name="cmsis_lib/source/stm32f4xx_tim.c" path="cmsis_lib/source/stm32f4xx_tim.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_gpio.h" path="cmsis_lib/include/stm32f4xx_gpio.h" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_rtc.h" path="cmsis_lib/include/stm32f4xx_rtc.h" type="1"/>
+    <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
     <File name="cmsis_boot/stm32f4xx_conf.h" path="cmsis_boot/stm32f4xx_conf.h" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.h" path="cmsis_boot/system_stm32f4xx.h" type="1"/>
     <File name="cmsis_lib/include" path="" type="2"/>
+    <File name="cmsis_lib/source/stm32f4xx_rtc.c" path="cmsis_lib/source/stm32f4xx_rtc.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_rcc.h" path="cmsis_lib/include/stm32f4xx_rcc.h" type="1"/>
-    <File name="AHRS/MadgwickAHRS.h" path="../../../../../Desktop/MadgwickAHRS/MadgwickAHRS.h" type="1"/>
+    <File name="AHRS/MadgwickAHRS.h" path="MadgwickAHRS/MadgwickAHRS.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_syscfg.c" path="cmsis_lib/source/stm32f4xx_syscfg.c" type="1"/>
     <File name="main.c" path="main.c" type="1"/>
   </Files>
 </Project>
