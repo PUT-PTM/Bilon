@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<History> 
-  <File usedCount="3" path="cmsis_lib/include/stm32f4xx_gpio.h"/>  
-  <File usedCount="3" path="cmsis_lib/source/stm32f4xx_gpio.c"/> 
-</History>
