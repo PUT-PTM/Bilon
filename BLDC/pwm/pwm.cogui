@@ -20,13 +20,14 @@
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/Users/Adrian/Documents/GitHub/Bilon/minIMU/CopterBrain/main.c" title="main.c" tooltip="C:/Users/Adrian/Documents/GitHub/Bilon/minIMU/CopterBrain/main.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CopterBrain/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2624" selectionTopPixel="1100"/>
+<editor id="org.coocox.welcome.ui.WelcomePage" name="" partName="welcome" title="welcome" tooltip="" workbook="DefaultEditorWorkbook">
+<input factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory">
+<org.coocox.welcome.ui.WelcomePage/>
+</input>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f4xx.c" partName="system_stm32f4xx.c" path="C:/Users/Adrian/Documents/GitHub/Bilon/minIMU/CopterBrain/cmsis_boot/system_stm32f4xx.c" title="system_stm32f4xx.c" tooltip="C:/Users/Adrian/Documents/GitHub/Bilon/minIMU/CopterBrain/cmsis_boot/system_stm32f4xx.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CopterBrain/cmsis_boot/system_stm32f4xx.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="15" selectionOffset="8170" selectionTopPixel="7532"/>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/Users/Adrian/Documents/GitHub/Bilon/BLDC/pwm/main.c" title="main.c" tooltip="C:/Users/Adrian/Documents/GitHub/Bilon/BLDC/pwm/main.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pwm/main.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2183" selectionTopPixel="1081"/>
 </editor>
 </editors>
 <views>
@@ -39,17 +40,12 @@
 <viewState/>
 </view>
 <view id="org.coocox.builder.ui.views.ProjectView" partName="Project">
-<viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="2">
+<viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="0">
 <expanded>
-<element path="/CopterBrain"/>
-<element path="/CopterBrain/cmsis"/>
-<element path="/CopterBrain/cmsis_boot"/>
-<element path="/CopterBrain/cmsis_lib"/>
-<element path="/CopterBrain/cmsis_lib/include"/>
-<element path="/CopterBrain/cmsis_lib/source"/>
+<element path="/pwm"/>
 </expanded>
 <selection>
-<element path="/CopterBrain/cmsis_boot/system_stm32f4xx.h"/>
+<element path="/pwm/main.c"/>
 </selection>
 </viewState>
 </view>
@@ -66,6 +62,9 @@
 <viewState/>
 </view>
 <view id="org.eclipse.debug.ui.VariableView" partName="Variables">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
 <view id="org.coocox.component.ui.Help" partName="Help">
@@ -105,6 +104,7 @@
 <view id="org.coocox.component.ui.ComponentView"/>
 <view id="org.coocox.builder.ui.views.ProjectView"/>
 <view id="org.coocox.component.ui.Help"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <fastViewBars/>
 <layout>
@@ -133,14 +133,15 @@
 </info>
 <info part="org.coocox.builder.ui.exampleView" ratio="0.1904059" ratioLeft="258" ratioRight="1097" relationship="2" relative="org.eclipse.ui.internal.ViewStack@e9c5ab"/>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@d16613" ratio="0.8162706" ratioLeft="893" ratioRight="201" relationship="2" relative="org.coocox.builder.ui.exampleView">
-<folder activePageID="org.coocox.component.ui.Help" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
 <page content="org.coocox.component.ui.Help" label="Help"/>
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
-<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.coocox.coassistant.view.CoAssistantView" label="LabelNotFound"/>
 <page content="org.coocox.builder.ui.MoreExampleView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
 </presentation>
 </folder>
 </info>
@@ -254,164 +255,20 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/CopterBrain/main.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/CopterBrain/AHRS/MadgwickAHRS.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/CopterBrain/AHRS/MadgwickAHRS.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/CopterBrain/cmsis_lib/include/stm32f4xx_rtc.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/CopterBrain/cmsis_lib/include/misc.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/CopterBrain/cmsis_lib/source/misc.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/CopterBrain/cmsis_boot/system_stm32f4xx.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/CopterBrain/cmsis_boot/system_stm32f4xx.h"/>
+<editor factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.welcome.ui.WelcomePage">
+<org.coocox.welcome.ui.WelcomePage/>
+</editor>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pwm/main.c"/>
 </editors>
-<item historyLabel="main.c" index="0">
+<item historyLabel="welcome" index="0"/>
+<item historyLabel="main.c" index="1">
+<position info="not_deleted" x="4773" y="0"/>
+</item>
+<item historyLabel="main.c" index="1">
 <position/>
 </item>
-<item historyLabel="MadgwickAHRS.c" index="1">
+<item active="true" historyLabel="main.c" index="1">
 <position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.h" index="2">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.h" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.h" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="4619" y="0"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="4780" y="3"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="4882" y="0"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="4882" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="2221" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="2148" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1346" y="0"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position info="not_deleted" x="1210" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="2247" y="7"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="2125" y="2"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position info="not_deleted" x="996" y="3"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1864" y="0"/>
-</item>
-<item historyLabel="MadgwickAHRS.c" index="1">
-<position info="not_deleted" x="996" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1864" y="0"/>
-</item>
-<item historyLabel="stm32f4xx_rtc.h" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="misc.h" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="stm32f4xx_rtc.h" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="misc.c" index="5">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="stm32f4xx_rtc.h" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="system_stm32f4xx.c" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="system_stm32f4xx.h" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="stm32f4xx_rtc.h" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="system_stm32f4xx.h" index="7">
-<position info="not_deleted" x="392" y="0"/>
-</item>
-<item active="true" historyLabel="system_stm32f4xx.c" index="6">
-<position info="not_deleted" x="0" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -420,6 +277,9 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="pwm/main.c">
+<persistable path="/pwm/main.c"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f4xx.h" tooltip="CopterBrain/cmsis_boot/system_stm32f4xx.h">
 <persistable path="/CopterBrain/cmsis_boot/system_stm32f4xx.h"/>
 </file>
@@ -461,12 +321,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4_discovery.h" tooltip="USB + IMU/f4_discovery/inc/stm32f4_discovery.h">
 <persistable path="/USB + IMU/f4_discovery/inc/stm32f4_discovery.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx.h" tooltip="CopterBrain/cmsis_boot/stm32f4xx.h">
-<persistable path="/CopterBrain/cmsis_boot/stm32f4xx.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="CopterBrain/main.c">
-<persistable path="/CopterBrain/main.c"/>
 </file>
 </mruList>
 </workbench>

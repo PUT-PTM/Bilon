@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m4 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F407VG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\MadgwickAHRS -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib\include -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_boot -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain">
-      <target file="MadgwickAHRS.o" lastModified="145638fa0be">
-         <source file="..\..\..\MadgwickAHRS\MadgwickAHRS.c" lastModified="1456361e252"/>
+      <target file="MadgwickAHRS.o" lastModified="14565ac3cad">
+         <source file="..\..\..\MadgwickAHRS\MadgwickAHRS.c" lastModified="14565ac32be"/>
       </target>
       <target file="stm32f4xx_gpio.o" lastModified="145638fa20b">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="1453daedfe1"/>
@@ -13,20 +13,20 @@
       <target file="system_stm32f4xx.o" lastModified="145638fa258">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1453db5486c"/>
       </target>
-      <target file="stm32f4xx_rtc.o" lastModified="145638fa3ac">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_rtc.c" lastModified="14561ffbd28"/>
-      </target>
       <target file="startup_stm32f4xx.o" lastModified="145638fa046">
          <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="1453daee04f"/>
       </target>
       <target file="stm32f4xx_i2c.o" lastModified="145638fa2c5">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_i2c.c" lastModified="1453dafc60c"/>
       </target>
+      <target file="stm32f4xx_rtc.o" lastModified="145638fa3ac">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_rtc.c" lastModified="14561ffbd28"/>
+      </target>
       <target file="stm32f4xx_syscfg.o" lastModified="145638fa00e">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="1456230c9c1"/>
       </target>
-      <target file="main.o" lastModified="145638fa13c">
-         <source file="..\..\..\main.c" lastModified="145638f965b"/>
+      <target file="main.o" lastModified="14565a5496a">
+         <source file="..\..\..\main.c" lastModified="14565a54104"/>
       </target>
       <target file="stm32f4xx_rcc.o" lastModified="145638fa1b1">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="1453daf402d"/>

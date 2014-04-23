@@ -28,7 +28,7 @@ void Read_Compass();
 
 float deg2rad(float degrees);
 float rad2deg(float radians);
-
+/*
         double a_xBias = 32634.2779917682;            // accelerometer bias
         double a_yBias = 32300.1140276867;
         double a_zBias = 32893.0853282136;
@@ -47,13 +47,13 @@ float rad2deg(float radians);
         double m_xGain = -0.00160372297752976;        // magnetometer gains
         double m_yGain = 0.0016037818986323;
         double m_zGain = 0.00182483736430979;
-
+*/
 void SysTick_Handler(void)
 {
 	Read_Gyro();
 	Read_Accel();
 	Read_Compass();
-
+/*
 	gx = (gx - w_xBias) * w_xGain;
 	gy = (gy - w_yBias) * w_yGain;
 	gz = (gz - w_zBias) * w_zGain;
@@ -65,7 +65,7 @@ void SysTick_Handler(void)
 	mx = (mx - m_xBias) * m_xGain;
 	my = (my - m_yBias) * m_yGain;
 	mz = (mz - m_zBias) * m_zGain;
-
+*/
 	MadgwickAHRSupdate(deg2rad(gx), deg2rad(gy), deg2rad(gz), ax, ay, az, mx, my, mz);
 
     float q12 =q1 *q1;
