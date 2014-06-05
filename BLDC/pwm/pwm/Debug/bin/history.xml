@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="4.7.4 -mcpu=cortex-m4 -mthumb -g -nostartfiles -Map=pwm.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\pwm -TC:\CooCox\CoIDE\configuration\ProgramData\pwm/arm-gcc-link.ld -g">
-      <target file="pwm.elf" lastModified="1464374b0db">
-         <source file="..\obj\stm32f4xx_pwr.o" lastModified="1464374a93b"/>
-         <source file="..\obj\stm32f4xx_dac.o" lastModified="1464374a9a0"/>
-         <source file="..\obj\startup_stm32f4xx.o" lastModified="1464374a9da"/>
-         <source file="..\obj\main.o" lastModified="1464374aa30"/>
-         <source file="..\obj\stm32f4xx_rcc.o" lastModified="1464374aac2"/>
-         <source file="..\obj\stm32f4xx_adc.o" lastModified="1464374ab61"/>
-         <source file="..\obj\stm32f4xx_gpio.o" lastModified="1464374abc6"/>
-         <source file="..\obj\system_stm32f4xx.o" lastModified="1464374ac1a"/>
-         <source file="..\obj\syscalls.o" lastModified="1464374ac60"/>
-         <source file="..\obj\stm32f4xx_dma.o" lastModified="1464374acce"/>
-         <source file="..\obj\misc.o" lastModified="1464374ad1f"/>
-         <source file="..\obj\stm32f4xx_rtc.o" lastModified="1464374addf"/>
-         <source file="..\obj\stm32f4xx_tim.o" lastModified="1464374aec1"/>
+      <target file="pwm.elf" lastModified="1466b2d25d6">
+         <source file="..\obj\stm32f4xx_pwr.o" lastModified="1466b2d1ffc"/>
+         <source file="..\obj\stm32f4xx_dac.o" lastModified="1466b2d204a"/>
+         <source file="..\obj\startup_stm32f4xx.o" lastModified="1466b2d2069"/>
+         <source file="..\obj\main.o" lastModified="1466b2d20a8"/>
+         <source file="..\obj\stm32f4xx_rcc.o" lastModified="1466b2d2115"/>
+         <source file="..\obj\stm32f4xx_adc.o" lastModified="1466b2d2173"/>
+         <source file="..\obj\stm32f4xx_gpio.o" lastModified="1466b2d21c1"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="1466b2d21ff"/>
+         <source file="..\obj\syscalls.o" lastModified="1466b2d222e"/>
+         <source file="..\obj\stm32f4xx_dma.o" lastModified="1466b2d227c"/>
+         <source file="..\obj\misc.o" lastModified="1466b2d22ab"/>
+         <source file="..\obj\stm32f4xx_rtc.o" lastModified="1466b2d2337"/>
+         <source file="..\obj\stm32f4xx_tim.o" lastModified="1466b2d23e3"/>
       </target>
    </processor>
 </history>

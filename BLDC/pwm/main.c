@@ -15,19 +15,22 @@
 static inline void PWM_initIO(void)
 {
 	/* Enable GPIO clocks */
-	RCC_AHB1PeriphClockCmd(OUT_PWM_1_RCC, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	GPIO_InitStructure.GPIO_Pin = OUT_PWM_1_PIN;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_11 | GPIO_Pin_13 |GPIO_Pin_14;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(OUT_PWM_1_GPIO, &GPIO_InitStructure);
+	GPIO_Init(GPIOE, &GPIO_InitStructure);
 
 	/* Connect TIM pins to AF */
-	GPIO_PinAFConfig(OUT_PWM_1_GPIO, OUT_PWM_1_PINSOURCE, OUT_PWM_1_TIM);
+	GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1);
+	GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
+	GPIO_PinAFConfig(GPIOE, GPIO_PinSource13, GPIO_AF_TIM1);
+	GPIO_PinAFConfig(GPIOE, GPIO_PinSource14, GPIO_AF_TIM1);
 }
 
 static inline void TIMER_t1Start(void)
@@ -73,14 +76,22 @@ static inline void TIMER_t1Init(void)
 
 	TIM_OC1Init(TIM1, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
+	TIM_OC2Init(TIM1, &TIM_OCInitStructure);
+	TIM_OC2PreloadConfig(TIM1, TIM_OCPreload_Enable);
+	TIM_OC3Init(TIM1, &TIM_OCInitStructure);
+	TIM_OC3PreloadConfig(TIM1, TIM_OCPreload_Enable);
+	TIM_OC4Init(TIM1, &TIM_OCInitStructure);
+	TIM_OC4PreloadConfig(TIM1, TIM_OCPreload_Enable);
 
 	TIM_ARRPreloadConfig(TIM1, ENABLE);
 
 	/* TIM1 Main Output Enable */
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
 
-	TIMER_t1Stop();
+	TIMER_t1Start();
 }
+
+
 
 int main(void)
 {
@@ -92,12 +103,12 @@ int main(void)
 	PWM_initIO();
 	TIMER_t1Init();
 
-	TIMER_t1Start();
-
 	int value = 0;
 
 	TIM1->CCR1 = (OUT_PWM_PERIOD/12);
-
+	TIM1->CCR2 = (OUT_PWM_PERIOD/12);
+	TIM1->CCR3 = (OUT_PWM_PERIOD/12);
+	TIM1->CCR4 = (OUT_PWM_PERIOD/12);
 	while(1)
 	{
 		asm("nop");
