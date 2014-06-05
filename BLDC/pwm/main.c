@@ -111,14 +111,26 @@ static inline void ADC_initIO(void)
 static inline void ADC_adc1Init(void)
 {
 
-
+/*
 	 ADC1->CR1 &= 0xF83F0000; //clear mask for CR1
 	 ADC1->CR1 |= 0x00800000 |//set ovrie = 0| res = 00 (12bit)| awden = 1 (allow reg group analog watchdog)| jawden = 0 ( disallow injected group analog watchdog)
 			 0x00000301;
+*/
+	ADC->CR1 = (uint32_t) 0x00000000; //czyszczenie rejestru
+	ADC-CR1|= ADC_CR1_DISCNUM_2 | ADC_CR1_DISCEN | ADC_CR1_SCAN;
+	ADC->CR2 = (uint32_t) 0x00000000;
+	ADC->CR2 |= ADC_CR2_ADON | ADC_CR2_DMA | ADC_CR2_DDS;
+	ADC->SMPR2 = (uint32_t) 0x00000000; //3 cykle dla wszystkich kana³ów
+	ADC->SQR1 = (uint32_t) 0x00000000;
+	ADC->SQR1 |= ADC_SQR1_L2;
+	ADC->SQR3 = (uint32_t) 0x00000000;
+	ADC->SQR3 |= ADC_SQR3_SQ1_0| ADC_SQR3_SQ2_1 | ADC_SQR3_SQ3_0 | ADC_SQR3_SQ3_1 | ADC_SQR3_SQ4_2;
 
+	ADC->CR2 |= ADC_CR2_SWSTART;
+	/*
 	ADC_InitTypeDef ADC_InitStructure;
 
-	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitStructure.ADC_ExternalTrigConv = 0;
 	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
@@ -133,8 +145,12 @@ static inline void ADC_adc1Init(void)
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 3, ADC_SampleTime_3Cycles);
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 4, ADC_SampleTime_3Cycles);
 
-	ADC_ContinuousModeCmd(ADC1, ENABLE);
-	ADC_Cmd
+	ADC1->CR2 |= ADC_CR2_EOCS | 0x00000001; //ustawienie przerwania po ka¿dym kanale, ustawienie bitu ADON
+
+	ADC_DiscModeChannelCountConfig(ADC1, 4);
+	ADC_DiscModeCmd(ADC1, ENABLE);
+
+	*/
 
 }
 
