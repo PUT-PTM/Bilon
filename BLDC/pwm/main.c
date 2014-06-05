@@ -1,5 +1,6 @@
 #include "stm32f4xx.h"
 #include "stm32f4xx_gpio.h"
+#include "stm32f4xx_adc.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_tim.h"
 #include "misc.h"
@@ -91,7 +92,57 @@ static inline void TIMER_t1Init(void)
 	TIMER_t1Start();
 }
 
+static inline void ADC_initIO(void)
+{
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE); //pwr for ADC1
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE); //pwr for input ADC pins
 
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+}
+
+static inline void ADC_adc1Init(void)
+{
+
+
+	 ADC1->CR1 &= 0xF83F0000; //clear mask for CR1
+	 ADC1->CR1 |= 0x00800000 |//set ovrie = 0| res = 00 (12bit)| awden = 1 (allow reg group analog watchdog)| jawden = 0 ( disallow injected group analog watchdog)
+			 0x00000301;
+
+	ADC_InitTypeDef ADC_InitStructure;
+
+	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+	ADC_InitStructure.ADC_ExternalTrigConv = 0;
+	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+	ADC_InitStructure.ADC_NbrOfConversion = 4;
+	ADC_InitStructure.ADC_Resolution = 0; //12 bitów (najwiêksza)
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
+
+	ADC_Init(ADC1, &ADC_InitStructure);
+
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 2, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 3, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 4, ADC_SampleTime_3Cycles);
+
+	ADC_ContinuousModeCmd(ADC1, ENABLE);
+	ADC_Cmd
+
+}
+
+static inline void ADC_dmaInit(void)
+{
+	ADC_DMACmd(ADC1, ENABLE);
+	ADC_DMARequestAfterLastTransferCmd(ADC1, ENABLE);
+}
 
 int main(void)
 {
@@ -99,9 +150,12 @@ int main(void)
 
 	SystemCoreClockUpdate();
 
-	// TIM1 PWM test
+
 	PWM_initIO();
 	TIMER_t1Init();
+
+	ADC_initIO();
+	ADC_adc1Init();
 
 	int value = 0;
 
@@ -111,7 +165,8 @@ int main(void)
 	TIM1->CCR4 = (OUT_PWM_PERIOD/12);
 	while(1)
 	{
-		asm("nop");
+		value=ADC_GetConversionValue(ADC1);
+		TIM1->CCR1=value;
 	}
 
 
