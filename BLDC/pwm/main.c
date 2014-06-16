@@ -1,6 +1,7 @@
 #include "stm32f4xx.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_adc.h"
+#include "stm32f4xx_dma.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_tim.h"
 #include "misc.h"
@@ -12,6 +13,8 @@
 #define OUT_PWM_1_TIM		GPIO_AF_TIM1
 
 #define OUT_PWM_PERIOD		20000
+unsigned long long  bufor;
+unsigned int fi = 10;
 
 static inline void PWM_initIO(void)
 {
@@ -116,15 +119,15 @@ static inline void ADC_adc1Init(void)
 	 ADC1->CR1 |= 0x00800000 |//set ovrie = 0| res = 00 (12bit)| awden = 1 (allow reg group analog watchdog)| jawden = 0 ( disallow injected group analog watchdog)
 			 0x00000301;
 */
-	ADC->CR1 = (uint32_t) 0x00000000; //czyszczenie rejestru
-	ADC-CR1|= ADC_CR1_DISCNUM_2 | ADC_CR1_DISCEN | ADC_CR1_SCAN;
-	ADC->CR2 = (uint32_t) 0x00000000;
-	ADC->CR2 |= ADC_CR2_ADON | ADC_CR2_DMA | ADC_CR2_DDS;
-	ADC->SMPR2 = (uint32_t) 0x00000000; //3 cykle dla wszystkich kana³ów
-	ADC->SQR1 = (uint32_t) 0x00000000;
-	ADC->SQR1 |= ADC_SQR1_L2;
-	ADC->SQR3 = (uint32_t) 0x00000000;
-	ADC->SQR3 |= ADC_SQR3_SQ1_0| ADC_SQR3_SQ2_1 | ADC_SQR3_SQ3_0 | ADC_SQR3_SQ3_1 | ADC_SQR3_SQ4_2;
+	ADC1->CR1 = (uint32_t) 0x00000000; //czyszczenie rejestru
+	ADC1->CR1|= ADC_CR1_DISCNUM_2 | ADC_CR1_DISCEN | ADC_CR1_SCAN;
+	ADC1->CR2 = (uint32_t) 0x00000000;
+	ADC1->CR2 |= ADC_CR2_ADON | ADC_CR2_DMA | ADC_CR2_DDS;
+	ADC1->SMPR2 = (uint32_t) 0x00000000; //3 cykle dla wszystkich kana³ów
+	ADC1->SQR1 = (uint32_t) 0x00000000;
+	ADC1->SQR1 |= ADC_SQR1_L2;
+	ADC1->SQR3 = (uint32_t) 0x00000000;
+	ADC1->SQR3 |= ADC_SQR3_SQ1_0| ADC_SQR3_SQ2_1 | ADC_SQR3_SQ3_0 | ADC_SQR3_SQ3_1 | ADC_SQR3_SQ4_2;
 
 	ADC->CR2 |= ADC_CR2_SWSTART;
 	/*
@@ -160,6 +163,26 @@ static inline void ADC_dmaInit(void)
 	ADC_DMARequestAfterLastTransferCmd(ADC1, ENABLE);
 }
 
+static inline void DMA2_Init(void){
+	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_DMA2, ENABLE);
+	DMA_DeInit(DMA2_Stream0);
+	DMA2_Stream0->CR |= DMA_MemoryDataSize_HalfWord | DMA_PeripheralDataSize_HalfWord | DMA_MemoryInc_Enable | DMA_Mode_Circular;
+	DMA2_Stream0->NDTR |= (uint32_t)0x00000004;
+	DMA2_Stream0->PAR |= (uint32_t)0x4001204c;//adres rejestru adc
+	DMA2_Stream0->M0AR |= (uint32_t)&bufor;
+	DMA2->LISR = 0x00000000;
+	DMA2->HISR = 0x00000000;
+
+}
+
+static inline void DMA2_Start(void){
+	DMA2->LISR = 0x00000000;
+	DMA2->HISR = 0x00000000;
+	DMA2_Stream0->NDTR |= (uint32_t)0x00000004;
+	DMA2_Stream0->M0AR |= (uint32_t)&bufor;
+	DMA2_Stream0->CR |= DMA_SxCR_EN;
+}
+
 int main(void)
 {
 	SystemInit();
@@ -173,6 +196,8 @@ int main(void)
 	ADC_initIO();
 	ADC_adc1Init();
 
+	DMA2_Init();
+	DMA2_Start();
 	int value = 0;
 
 	TIM1->CCR1 = (OUT_PWM_PERIOD/12);
@@ -181,8 +206,69 @@ int main(void)
 	TIM1->CCR4 = (OUT_PWM_PERIOD/12);
 	while(1)
 	{
+		int krok=1; //stan silnika
+		int
+		int bufor1, bufor2, bufor3, bufor4;
 		value=ADC_GetConversionValue(ADC1);
 		TIM1->CCR1=value;
+		if((ADC1->SR & 0x00000002)==1)
+		{
+			bufor1=(int)(bufor>>48); //faza w
+			bufor2=(int)((bufor & 0x0000111100000000)>>32); //faza v
+			bufor3=(int)((bufor & 0x0000000011110000)>>16);// faza u
+			bufor4=(int)(bufor & 0x0000000000001111); // suma
+
+			switch(krok){
+
+			case 1:
+				if((bufor1 >= bufor4-fi)&&(bufor1 <= bufor4 + fi)&&krok==1)
+				{
+					//prze³¹czenie na krok 2
+					krok=2;
+					//w³¹czenie fazy u(+) i w(-), v(np)
+				}
+				break;
+			case 2:
+				if((bufor2 >= bufor4-fi)&&(bufor2 <= bufor4 + fi))
+				{
+					//prze³¹czenie na krok 3
+					krok=3;
+					//w³¹czenie fazy u(np), w(-), v(+)
+				}
+				break;
+			case 3:
+				if((bufor3 >= bufor4-fi)&&(bufor3 <= bufor4 + fi))
+				{
+					//prze³¹czenie na krok 4
+					krok=4;
+					//w³¹czenie fazy u(-), w(np), v(+)
+				}
+				break;
+			case 4:
+				if((bufor1 >= bufor4-fi)&&(bufor1 <= bufor4 + fi)&&krok==1)
+				{
+					//prze³¹czenie na krok 5
+					krok=5;
+					//w³¹czenie fazy u(-), w(+), v(np)
+				}
+				break;
+			case 5:
+				if((bufor2 >= bufor4-fi)&&(bufor2 <= bufor4 + fi))
+				{
+					//prze³¹czenie na krok 6
+					krok=6;
+					//w³¹czenie fazy u(np), w(+), v(-)
+				}
+				break;
+			case 6:
+				if((bufor3 >= bufor4-fi)&&(bufor3 <= bufor4 + fi))
+				{
+					//prze³¹czenie na krok 1
+					krok=1;
+					//w³¹czenie fazy u(+), w(np), v(-)
+				}
+				break;
+			}
 	}
 
 
