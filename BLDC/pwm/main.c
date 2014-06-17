@@ -11,10 +11,36 @@
 #define OUT_PWM_1_PIN		GPIO_Pin_8
 #define OUT_PWM_1_PINSOURCE	GPIO_PinSource8
 #define OUT_PWM_1_TIM		GPIO_AF_TIM1
+#define FAZA_UG				GPIO_Pin_1
+#define FAZA_VG				GPIO_Pin_2
+#define FAZA_WG				GPIO_Pin_3
+#define FAZA_UD				GPIO_Pin_4
+#define FAZA_VD				GPIO_Pin_5
+#define FAZA_WD				GPIO_Pin_6
 
 #define OUT_PWM_PERIOD		20000
 unsigned long long  bufor;
 unsigned int fi = 10;
+
+
+static inline void GPIO_outputInit(void){
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 |GPIO_Pin_4;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
+		GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+		GPIO_ResetBits(GPIOD, FAZA_VD);
+		GPIO_ResetBits(GPIOD, FAZA_VG);
+		GPIO_ResetBits(GPIOD, FAZA_WD);
+		GPIO_ResetBits(GPIOD, FAZA_WG);
+		GPIO_ResetBits(GPIOD, FAZA_UD);
+		GPIO_ResetBits(GPIOD, FAZA_UG);
+}
 
 static inline void PWM_initIO(void)
 {
@@ -102,7 +128,7 @@ static inline void ADC_initIO(void)
 
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
+	GPIO_InitStructure.GPIO_Pin = FAZA_VG | FAZA_UG | FAZA_WG | FAZA_VD | FAZA_UD | FAZA_WD;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
@@ -183,6 +209,96 @@ static inline void DMA2_Start(void){
 	DMA2_Stream0->CR |= DMA_SxCR_EN;
 }
 
+void wait(int i)
+{
+	while(i!=0)
+	{
+		i--;
+	}
+}
+
+static inline void Rozruch(int * krok){
+	TIM1->CCR1=100;
+	GPIO_SetBits(GPIOD, FAZA_WD);
+	GPIO_SetBits(GPIOD, FAZA_UG);
+	krok=2;
+	int i = 20;
+	int j = 100000;
+	while((i--)>0)
+	{
+	switch(krok){
+
+				case 1:
+
+					{
+						//prze³¹czenie na krok 2
+						krok=2;
+						GPIO_ResetBits(GPIOD, FAZA_VD);
+						GPIO_SetBits(GPIOD, FAZA_WD);
+						//w³¹czenie fazy u(+) i w(-), v(np)
+						wait(j);
+						j-=2000;
+					}
+					break;
+				case 2:
+
+					{
+						//prze³¹czenie na krok 3
+						krok=3;
+						GPIO_ResetBits(GPIOD, FAZA_UG);
+						GPIO_SetBits(GPIOD, FAZA_VG);
+						//w³¹czenie fazy u(np), w(-), v(+)
+						j-=2000;
+					}
+					break;
+				case 3:
+
+					{
+						//prze³¹czenie na krok 4
+						krok=4;
+						GPIO_ResetBits(GPIOD, FAZA_WD);
+						GPIO_SetBits(GPIOD, FAZA_UD);
+						//w³¹czenie fazy u(-), w(np), v(+)
+						j-=2000;
+					}
+					break;
+				case 4:
+
+					{
+						//prze³¹czenie na krok 5
+						krok=5;
+						GPIO_ResetBits(GPIOD, FAZA_VG);
+						GPIO_SetBits(GPIOD, FAZA_WG);
+						//w³¹czenie fazy u(-), w(+), v(np)
+						j-=2000;
+					}
+					break;
+				case 5:
+					{
+						//prze³¹czenie na krok 6
+						krok=6;
+						GPIO_ResetBits(GPIOD, FAZA_UD);
+						GPIO_SetBits(GPIOD, FAZA_VD);
+						//w³¹czenie fazy u(np), w(+), v(-)
+						j-=2000;
+					}
+					break;
+				case 6:
+					{
+						//prze³¹czenie na krok 1
+						krok=1;
+						GPIO_ResetBits(GPIOD, FAZA_WG);
+						GPIO_SetBits(GPIOD, FAZA_UG);
+						//w³¹czenie fazy u(+), w(np), v(-)
+						j-=2000;
+					}
+					break;
+				}
+			}
+}
+
+
+
 int main(void)
 {
 	SystemInit();
@@ -198,7 +314,7 @@ int main(void)
 
 	DMA2_Init();
 	DMA2_Start();
-	int value = 0;
+	int value = 100;
 
 	TIM1->CCR1 = (OUT_PWM_PERIOD/12);
 	TIM1->CCR2 = (OUT_PWM_PERIOD/12);
@@ -211,6 +327,8 @@ int main(void)
 		int bufor1, bufor2, bufor3, bufor4;
 		value=ADC_GetConversionValue(ADC1);
 		TIM1->CCR1=value;
+		Rozruch(&krok);
+		//funkcja startuj¹ca silnik
 		if((ADC1->SR & 0x00000002)==1)
 		{
 			bufor1=(int)(bufor>>48); //faza w
@@ -225,6 +343,9 @@ int main(void)
 				{
 					//prze³¹czenie na krok 2
 					krok=2;
+					GPIO_ResetBits(GPIOD, FAZA_VD);
+					GPIO_SetBits(GPIOD, FAZA_WD);
+					GPIO_SetBits(GPIOD, FAZA_UG);
 					//w³¹czenie fazy u(+) i w(-), v(np)
 				}
 				break;
@@ -233,6 +354,8 @@ int main(void)
 				{
 					//prze³¹czenie na krok 3
 					krok=3;
+					GPIO_ResetBits(GPIOD, FAZA_UG);
+					GPIO_SetBits(GPIOD, FAZA_VG);
 					//w³¹czenie fazy u(np), w(-), v(+)
 				}
 				break;
@@ -241,6 +364,8 @@ int main(void)
 				{
 					//prze³¹czenie na krok 4
 					krok=4;
+					GPIO_ResetBits(GPIOD, FAZA_WD);
+					GPIO_SetBits(GPIOD, FAZA_UD);
 					//w³¹czenie fazy u(-), w(np), v(+)
 				}
 				break;
@@ -249,6 +374,8 @@ int main(void)
 				{
 					//prze³¹czenie na krok 5
 					krok=5;
+					GPIO_ResetBits(GPIOD, FAZA_VG);
+					GPIO_SetBits(GPIOD, FAZA_WG);
 					//w³¹czenie fazy u(-), w(+), v(np)
 				}
 				break;
@@ -257,6 +384,8 @@ int main(void)
 				{
 					//prze³¹czenie na krok 6
 					krok=6;
+					GPIO_ResetBits(GPIOD, FAZA_UD);
+					GPIO_SetBits(GPIOD, FAZA_VD);
 					//w³¹czenie fazy u(np), w(+), v(-)
 				}
 				break;
@@ -265,10 +394,15 @@ int main(void)
 				{
 					//prze³¹czenie na krok 1
 					krok=1;
+					GPIO_ResetBits(GPIOD, FAZA_WG);
+					GPIO_SetBits(GPIOD, FAZA_UG);
 					//w³¹czenie fazy u(+), w(np), v(-)
 				}
 				break;
 			}
+		}
+			DMA2_Start();
+			//funkcja zmieniaj¹ca wype³nienie pwm
 	}
 
 
