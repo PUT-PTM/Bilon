@@ -14,14 +14,27 @@
 #define FAZA_UG				GPIO_Pin_1
 #define FAZA_VG				GPIO_Pin_2
 #define FAZA_WG				GPIO_Pin_3
-#define FAZA_UD				GPIO_Pin_4
-#define FAZA_VD				GPIO_Pin_5
-#define FAZA_WD				GPIO_Pin_6
+#define FAZA_UDG			GPIO_Pin_4
+#define FAZA_VDG			GPIO_Pin_5
+#define FAZA_WDG			GPIO_Pin_6
+#define FAZA_UDD			GPIO_Pin_7
+#define FAZA_VDD			GPIO_Pin_8
+#define FAZA_WDD			GPIO_Pin_9
 
 #define OUT_PWM_PERIOD		20000
 unsigned long long  bufor;
 unsigned int fi = 10;
 
+
+void inline turn_on(int gora, int dol){
+	GPIO_ResetBits(GPIOD, dol);
+	GPIO_SetBits(GPIOD, gora);
+}
+
+void inline turn_off(int gora, int dol){
+	GPIO_ResetBits(GPIOD, gora);
+	GPIO_SetBits(GPIOD, dol);
+}
 
 static inline void GPIO_outputInit(void){
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -219,7 +232,8 @@ void wait(int i)
 
 static inline void Rozruch(int * krok){
 	TIM1->CCR1=100;
-	GPIO_SetBits(GPIOD, FAZA_WD);
+	//GPIO_SetBits(GPIOD, FAZA_WD);
+	turn_on(FAZA_WDG,FAZA_WDD);
 	GPIO_SetBits(GPIOD, FAZA_UG);
 	krok=2;
 	int i = 20;
@@ -234,7 +248,9 @@ static inline void Rozruch(int * krok){
 						//prze³¹czenie na krok 2
 						krok=2;
 						GPIO_ResetBits(GPIOD, FAZA_VD);
-						GPIO_SetBits(GPIOD, FAZA_WD);
+						turn_off(FAZA_VDG, FAZA_VDD);
+						//GPIO_SetBits(GPIOD, FAZA_WD);
+						turn_on(FAZA_WDG,FAZA_WDD);
 						//w³¹czenie fazy u(+) i w(-), v(np)
 						wait(j);
 						j-=2000;
@@ -256,8 +272,10 @@ static inline void Rozruch(int * krok){
 					{
 						//prze³¹czenie na krok 4
 						krok=4;
-						GPIO_ResetBits(GPIOD, FAZA_WD);
-						GPIO_SetBits(GPIOD, FAZA_UD);
+						//GPIO_ResetBits(GPIOD, FAZA_WD);
+						turn_off(FAZA_WDG,FAZA_WDD);
+						//GPIO_SetBits(GPIOD, FAZA_UD);
+						turn_on(FAZA_UDG,FAZA_UDD);
 						//w³¹czenie fazy u(-), w(np), v(+)
 						j-=2000;
 					}
@@ -277,8 +295,10 @@ static inline void Rozruch(int * krok){
 					{
 						//prze³¹czenie na krok 6
 						krok=6;
-						GPIO_ResetBits(GPIOD, FAZA_UD);
-						GPIO_SetBits(GPIOD, FAZA_VD);
+						//GPIO_ResetBits(GPIOD, FAZA_UD);
+						turn_off(FAZA_UDG,FAZA_UDD);
+						//GPIO_SetBits(GPIOD, FAZA_VD);
+						turn_on(FAZA_VDG,FAZA_VDD);
 						//w³¹czenie fazy u(np), w(+), v(-)
 						j-=2000;
 					}
