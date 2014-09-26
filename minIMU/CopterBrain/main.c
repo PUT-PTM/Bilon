@@ -4,16 +4,109 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_i2c.h"
 #include "stm32f4xx_tim.h"
-#include "misc.h"
 #include "MadgwickAHRS.h"
+
+#include "usbd_cdc_core.h"
+#include "usbd_usr.h"
+#include "usbd_desc.h"
+#include "usbd_cdc_vcp.h"
+#include "usb_dcd_int.h"
 
 #define GYRO_ADDRESS 0xD2	 // adres zyroskopu
 #define ACCEL_ADDRESS 0x30	 // adres akcelerometru
 #define COMPASS_ADDRESS 0x3C // adres magnetometru
+#define GRAVITY 256  //this equivalent to 1G in the raw data coming from the accelerometer
 
-// i co z tymi globalsami
-int gx,gy,gz,ax,ay,az,mx,my,mz;
+//---------------------------------------------------------
+
+__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+
+//---------------------------------------------------------
+
+uint8_t gx, gy, gz, ax, ay, az, mx, my, mz, theByte;
 float  Roll, Pitch, Yaw;
+
+// !-!
+uint8_t SENSOR_SIGN[9] = {1,1,1,-1,-1,-1,1,1,1}; //Correct directions x,y,z - gyro, accelerometer, magnetometer
+
+// L3G4200D gyro: 2000 dps full scale
+// 70 mdps/digit; 1 dps = 0.07
+#define Gyro_Gain_X 0.07 //X axis Gyro gain
+#define Gyro_Gain_Y 0.07 //Y axis Gyro gain
+#define Gyro_Gain_Z 0.07 //Z axis Gyro gain
+#define Gyro_Scaled_X(x) ((x)*ToRad(Gyro_Gain_X)) //Return the scaled ADC raw data of the gyro in radians for second
+#define Gyro_Scaled_Y(x) ((x)*ToRad(Gyro_Gain_Y)) //Return the scaled ADC raw data of the gyro in radians for second
+#define Gyro_Scaled_Z(x) ((x)*ToRad(Gyro_Gain_Z)) //Return the scaled ADC raw data of the gyro in radians for second
+
+// LSM303 magnetometer calibration constants; use the Calibrate example from
+// the Pololu LSM303 library to find the right values for your board
+#define M_X_MIN -602
+#define M_Y_MIN -627
+#define M_Z_MIN -511
+#define M_X_MAX 370
+#define M_Y_MAX 356
+#define M_Z_MAX 439
+
+#define Kp_ROLLPITCH 0.02
+#define Ki_ROLLPITCH 0.00002
+#define Kp_YAW 1.2
+#define Ki_YAW 0.00002
+
+/*For debugging purposes*/
+//OUTPUTMODE=1 will print the corrected data,
+//OUTPUTMODE=0 will print uncorrected data of the gyros (with drift)
+#define OUTPUTMODE 1
+
+//#define PRINT_DCM 0     //Will print the whole direction cosine matrix
+#define PRINT_ANALOGS 0 //Will print the analog raw data
+#define PRINT_EULER 1   //Will print the Euler angles Roll, Pitch and Yaw
+
+#define STATUS_LED 13
+
+float G_Dt=0.02;    // Integration time (DCM algorithm)  We will run the integration loop at 50Hz if possible
+
+long timer=0;   //general purpuse timer
+long timer_old;
+long timer24=0; //Second timer used to print values
+int AN[6]; //array that stores the gyro and accelerometer data
+int AN_OFFSET[6]={0,0,0,0,0,0}; //Array that stores the Offset of the sensors
+
+int gyro_x;
+int gyro_y;
+int gyro_z;
+int accel_x;
+int accel_y;
+int accel_z;
+int magnetom_x;
+int magnetom_y;
+int magnetom_z;
+float c_magnetom_x;
+float c_magnetom_y;
+float c_magnetom_z;
+float MAG_Heading;
+
+float Accel_Vector[3]= {0,0,0}; //Store the acceleration in a vector
+float Gyro_Vector[3]= {0,0,0};//Store the gyros turn rate in a vector
+float Omega_Vector[3]= {0,0,0}; //Corrected Gyro_Vector data
+float Omega_P[3]= {0,0,0};//Omega Proportional correction
+float Omega_I[3]= {0,0,0};//Omega Integrator
+float Omega[3]= {0,0,0};
+
+// Euler angles
+float roll;
+float pitch;
+float yaw;
+
+float errorRollPitch[3]= {0,0,0};
+float errorYaw[3]= {0,0,0};
+
+unsigned int counter=0;
+short gyro_sat=0;
+
+float DCM_Matrix[3][3] = { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
+float Update_Matrix[3][3]={{0,1,2},{3,4,5},{6,7,8}}; //Gyros here
+
+float Temporary_Matrix[3][3] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
 void I2C1_init(void);
 void I2C_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction);
@@ -28,133 +121,36 @@ void Read_Compass();
 
 float deg2rad(float degrees);
 float rad2deg(float radians);
-/*
-        double a_xBias = 32634.2779917682;            // accelerometer bias
-        double a_yBias = 32300.1140276867;
-        double a_zBias = 32893.0853282136;
-        double a_xGain = -0.00150042985864975;        // accelerometer gains
-        double a_yGain = -0.00147414192905898;
-        double a_zGain = 0.00152294825926844;
-        double w_xBias = 25247;                             // gyroscope bias
-        double w_yBias = 25126;
-        double w_zBias = 24463;
-        double w_xGain = 0.00102058528925813;         // gyroscope gains
-        double w_yGain = -0.00110455853342484;
-        double w_zGain = 0.00107794298635984;
-        double m_xBias = -8.20750399495073;           // magnetometer baises
-        double m_yBias = 15.6531909021474;
-        double m_zBias = 7.32498941411782;
-        double m_xGain = -0.00160372297752976;        // magnetometer gains
-        double m_yGain = 0.0016037818986323;
-        double m_zGain = 0.00182483736430979;
-*/
+void configInit();
+
 void SysTick_Handler(void)
 {
+ // clock liczy
 	Read_Gyro();
 	Read_Accel();
 	Read_Compass();
-/*
-	gx = (gx - w_xBias) * w_xGain;
-	gy = (gy - w_yBias) * w_yGain;
-	gz = (gz - w_zBias) * w_zGain;
 
-	ax = (ax - a_xBias) * a_xGain;
-	ay = (ay - a_yBias) * a_yGain;
-	az = (az - a_zBias) * a_zGain;
-
-	mx = (mx - m_xBias) * m_xGain;
-	my = (my - m_yBias) * m_yGain;
-	mz = (mz - m_zBias) * m_zGain;
-*/
-	MadgwickAHRSupdate(deg2rad(gx), deg2rad(gy), deg2rad(gz), ax, ay, az, mx, my, mz);
-
-    float q12 =q1 *q1;
-    float q22 =q2 *q2;
-    float q32 =q3 *q3;
-
-    Roll = rad2deg((float)atan2(2 * (q2 *q3 +q0 *q1), (1 - 2 * (q12 + q22))));
-    Pitch = rad2deg((float)-asin(2 * (q1 *q3 -q0 *q2)));
-    Yaw = rad2deg((float)atan2(2 * (q1 *q2 +q0 *q3), (1 - 2 * (q22 + q32))));
+	if (!VCP_get_char(&theByte))
+	{
+		VCP_send_str("!ANG:22,44,11\n");
+	}
 }
-
+//--------------------------------------------
 int main(void)
 {
 	SystemInit();
 	SystemCoreClockUpdate();
 
 	I2C1_init();
+	// Init Accel Compass Gyro
+	configInit();
 
-	/* GPIOD Periph clock enable */
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
-
-	GPIO_InitTypeDef  GPIO_InitStructure;
-	/* Configure PD12, PD13, PD14 and PD15 in output pushpull mode */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13| GPIO_Pin_14| GPIO_Pin_15;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-		//zyroskop (Gyro)
-		I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
-			I2C_write(I2C1, 0x20);   // L3G_CTRL_REG1 0x20
-			I2C_write(I2C1, 0xBF);   // 0x0F = 0b00001111
-									 // ODR 100Hz Cut-off 12.5
-									 // Normal power mode, all axes enabled
+	// Przerwanie 200 x na sec
+	SysTick_Config(SystemCoreClock/200);
 
 
-		I2C_stop(I2C1);
-		I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
-
-			I2C_write(I2C1, 0x23); // CTRL_REG4
-			I2C_write(I2C1, 0x10);
-
-		I2C_stop(I2C1);
-
-		//akcelerometr (Accel)
-		I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
-
-			I2C_write(I2C1,0x20);   // LSM303_CTRL_REG1_A  0x20
-			I2C_write(I2C1,0x37);   // Enable Accelerometer
-									// 0x27 = 0b00100111
-									// ODR 50Hz Cut-off 37
-									// Normal power mode, all axes enabled
-		I2C_stop(I2C1);
-		I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
-
-
-			I2C_write(I2C1,0x23);
-			I2C_write(I2C1,0x30);
-
-		I2C_stop(I2C1);
-
-		//magnetometr (Compass)
-		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
-
-
-			I2C_write(I2C1,0x00);
-			I2C_write(I2C1,0x20);
-
-		I2C_stop(I2C1);
-		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
-
-			I2C_write(I2C1,0x01);
-			I2C_write(I2C1,0x20);
-
-		I2C_stop(I2C1);
-		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
-
-
-			I2C_write(I2C1,0x02);	  //LSM303_MR_REG_M   0x02
-			I2C_write(I2C1,0x00);     // Enable Magnetometer
-									  // 0x00 = 0b00000000
-			  	  	  	  	  	  	  // Continuous conversion mode
-		I2C_stop(I2C1);
 
 	unsigned int i;
-	if (SysTick_Config(SystemCoreClock/200))  while (1);
-
 	for(;;)
 	{
 		GPIO_ToggleBits (GPIOD, GPIO_Pin_14);
@@ -164,7 +160,6 @@ int main(void)
 }
 
 void I2C1_init(void){
-
 	GPIO_InitTypeDef GPIO_InitStruct;
 	I2C_InitTypeDef I2C_InitStruct;
 
@@ -292,8 +287,6 @@ void I2C_stop(I2C_TypeDef* I2Cx){
 	//while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
 }
 
-
-
 // minIMU
 void Read_Gyro(){
 	I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
@@ -355,12 +348,89 @@ void Read_Compass(){
 		mz = (int16_t)(zhm << 8 | zlm);
 }
 
-float deg2rad(float degrees)
-{
+void configInit(){
+	 // USB  -> VCP
+	 USBD_Init(&USB_OTG_dev,
+	            USB_OTG_FS_CORE_ID,
+	            &USR_desc,
+	            &USBD_CDC_cb,
+	            &USR_cb);
+
+	// GPIO
+	/* GPIOD Periph clock enable */
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+
+	GPIO_InitTypeDef  GPIO_InitStructure;
+	/* Configure PD12, PD13, PD14 and PD15 in output pushpull mode */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13| GPIO_Pin_14| GPIO_Pin_15;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+	// MinImu
+		//zyroskop (Gyro)
+		I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
+			I2C_write(I2C1, 0x20);   // L3G_CTRL_REG1 0x20
+			I2C_write(I2C1, 0xBF);   // 0x0F = 0b00001111
+									 // ODR 100Hz Cut-off 12.5
+									 // Normal power mode, all axes enabled
+
+		I2C_stop(I2C1);
+		I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1, 0x23); // CTRL_REG4
+			I2C_write(I2C1, 0x10);
+
+		I2C_stop(I2C1);
+
+		//akcelerometr (Accel)
+		I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1,0x20);   // LSM303_CTRL_REG1_A  0x20
+			I2C_write(I2C1,0x37);   // Enable Accelerometer
+									// 0x27 = 0b00100111
+									// ODR 50Hz Cut-off 37
+									// Normal power mode, all axes enabled
+		I2C_stop(I2C1);
+		I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1,0x23);
+			I2C_write(I2C1,0x30);
+
+		I2C_stop(I2C1);
+
+		//magnetometr (Compass)
+		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1,0x00);
+			I2C_write(I2C1,0x20);
+
+		I2C_stop(I2C1);
+		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1,0x01);
+			I2C_write(I2C1,0x20);
+
+		I2C_stop(I2C1);
+		I2C_start(I2C1, COMPASS_ADDRESS, I2C_Direction_Transmitter);
+
+			I2C_write(I2C1,0x02);	  //LSM303_MR_REG_M   0x02
+			I2C_write(I2C1,0x00);     // Enable Magnetometer
+									  // 0x00 = 0b00000000
+			  	  	  	  	  	  	  // Continuous conversion mode
+		I2C_stop(I2C1);
+}
+
+float deg2rad(float degrees){
     return (float)(M_PI / 180) * degrees;
 }
 
-float rad2deg(float radians)
-{
+float rad2deg(float radians){
     return (radians * 180) / (float)M_PI;
+}
+
+void OTG_FS_IRQHandler(void){
+  USBD_OTG_ISR_Handler (&USB_OTG_dev);
 }
