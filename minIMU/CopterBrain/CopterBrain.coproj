@@ -90,6 +90,7 @@
     <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
     <File name="serialUSB/usbd_ioreq.c" path="serialUSB/usbd_ioreq.c" type="1"/>
     <File name="serialUSB/usbd_desc.c" path="serialUSB/usbd_desc.c" type="1"/>
+    <File name="AHRS/PololuAHRS.h" path="AHRS/PololuAHRS.h" type="1"/>
     <File name="serialUSB/usb_regs.h" path="serialUSB/usb_regs.h" type="1"/>
     <File name="serialUSB/usbd_core.h" path="serialUSB/usbd_core.h" type="1"/>
     <File name="serialUSB/usbd_req.c" path="serialUSB/usbd_req.c" type="1"/>
@@ -105,6 +106,8 @@
     <File name="cmsis/core_cm4_simd.h" path="cmsis/core_cm4_simd.h" type="1"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="cmsis/core_cm4.h" path="cmsis/core_cm4.h" type="1"/>
+    <File name="minIMU/minIMU.c" path="minIMU/minIMU.c" type="1"/>
+    <File name="MadgwickAHRS/MadgwickAHRS.c" path="MadgwickAHRS/MadgwickAHRS.c" type="1"/>
     <File name="AHRS" path="" type="2"/>
     <File name="cmsis_lib/source/misc.c" path="cmsis_lib/source/misc.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_tim.h" path="cmsis_lib/include/stm32f4xx_tim.h" type="1"/>
@@ -112,6 +115,7 @@
     <File name="serialUSB/usb_dcd.c" path="serialUSB/usb_dcd.c" type="1"/>
     <File name="cmsis_lib/source" path="" type="2"/>
     <File name="serialUSB/usbd_conf.h" path="serialUSB/usbd_conf.h" type="1"/>
+    <File name="minIMU/minIMU.h" path="minIMU/minIMU.h" type="1"/>
     <File name="cmsis_boot/stm32f4xx_conf.h" path="cmsis_boot/stm32f4xx_conf.h" type="1"/>
     <File name="serialUSB/usbd_cdc_vcp.c" path="serialUSB/usbd_cdc_vcp.c" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.h" path="cmsis_boot/system_stm32f4xx.h" type="1"/>
@@ -119,17 +123,18 @@
     <File name="cmsis_lib/source/stm32f4xx_rtc.c" path="cmsis_lib/source/stm32f4xx_rtc.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_rcc.h" path="cmsis_lib/include/stm32f4xx_rcc.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_syscfg.c" path="cmsis_lib/source/stm32f4xx_syscfg.c" type="1"/>
+    <File name="AHRS/PololuAHRS.c" path="AHRS/PololuAHRS.c" type="1"/>
     <File name="serialUSB" path="" type="2"/>
     <File name="cmsis_boot/startup/startup_stm32f4xx.c" path="cmsis_boot/startup/startup_stm32f4xx.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
     <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
     <File name="serialUSB/usb_bsp.h" path="serialUSB/usb_bsp.h" type="1"/>
     <File name="serialUSB/usb_dcd_int.c" path="serialUSB/usb_dcd_int.c" type="1"/>
+    <File name="minIMU" path="" type="2"/>
     <File name="serialUSB/usbd_cdc_vcp.h" path="serialUSB/usbd_cdc_vcp.h" type="1"/>
     <File name="serialUSB/usbd_usr.h" path="serialUSB/usbd_usr.h" type="1"/>
-    <File name="AHRS/MadgwickAHRS.c" path="MadgwickAHRS/MadgwickAHRS.c" type="1"/>
-    <File name="cmsis_lib/source/stm32f4xx_exti.c" path="cmsis_lib/source/stm32f4xx_exti.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_exti.h" path="cmsis_lib/include/stm32f4xx_exti.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_exti.c" path="cmsis_lib/source/stm32f4xx_exti.c" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.c" path="cmsis_boot/system_stm32f4xx.c" type="1"/>
     <File name="serialUSB/usbd_ioreq.h" path="serialUSB/usbd_ioreq.h" type="1"/>
     <File name="serialUSB/usb_core.h" path="serialUSB/usb_core.h" type="1"/>
@@ -147,7 +152,8 @@
     <File name="serialUSB/usb_core.c" path="serialUSB/usb_core.c" type="1"/>
     <File name="serialUSB/usbd_desc.h" path="serialUSB/usbd_desc.h" type="1"/>
     <File name="cmsis_lib/include" path="" type="2"/>
-    <File name="AHRS/MadgwickAHRS.h" path="MadgwickAHRS/MadgwickAHRS.h" type="1"/>
+    <File name="MadgwickAHRS/MadgwickAHRS.h" path="MadgwickAHRS/MadgwickAHRS.h" type="1"/>
+    <File name="MadgwickAHRS" path="" type="2"/>
     <File name="serialUSB/usbd_req.h" path="serialUSB/usbd_req.h" type="1"/>
     <File name="main.c" path="main.c" type="1"/>
   </Files>
