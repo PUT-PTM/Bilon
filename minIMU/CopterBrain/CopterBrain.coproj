@@ -94,11 +94,11 @@
     <File name="serialUSB/usbd_core.h" path="serialUSB/usbd_core.h" type="1"/>
     <File name="serialUSB/usbd_req.c" path="serialUSB/usbd_req.c" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
-    <File name="serialUSB/usb_dcd.h" path="serialUSB/usb_dcd.h" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_syscfg.h" path="cmsis_lib/include/stm32f4xx_syscfg.h" type="1"/>
+    <File name="serialUSB/usb_dcd.h" path="serialUSB/usb_dcd.h" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
-    <File name="serialUSB/usbd_cdc_core.h" path="serialUSB/usbd_cdc_core.h" type="1"/>
     <File name="serialUSB/usbd_usr.c" path="serialUSB/usbd_usr.c" type="1"/>
+    <File name="serialUSB/usbd_cdc_core.h" path="serialUSB/usbd_cdc_core.h" type="1"/>
     <File name="serialUSB/usb_conf.h" path="serialUSB/usb_conf.h" type="1"/>
     <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
     <File name="cmsis_boot/startup" path="" type="2"/>
@@ -122,14 +122,14 @@
     <File name="serialUSB" path="" type="2"/>
     <File name="cmsis_boot/startup/startup_stm32f4xx.c" path="cmsis_boot/startup/startup_stm32f4xx.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
-    <File name="serialUSB/usb_bsp.h" path="serialUSB/usb_bsp.h" type="1"/>
     <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
+    <File name="serialUSB/usb_bsp.h" path="serialUSB/usb_bsp.h" type="1"/>
     <File name="serialUSB/usb_dcd_int.c" path="serialUSB/usb_dcd_int.c" type="1"/>
     <File name="serialUSB/usbd_cdc_vcp.h" path="serialUSB/usbd_cdc_vcp.h" type="1"/>
-    <File name="AHRS/MadgwickAHRS.c" path="MadgwickAHRS/MadgwickAHRS.c" type="1"/>
     <File name="serialUSB/usbd_usr.h" path="serialUSB/usbd_usr.h" type="1"/>
-    <File name="cmsis_lib/include/stm32f4xx_exti.h" path="cmsis_lib/include/stm32f4xx_exti.h" type="1"/>
+    <File name="AHRS/MadgwickAHRS.c" path="MadgwickAHRS/MadgwickAHRS.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_exti.c" path="cmsis_lib/source/stm32f4xx_exti.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_exti.h" path="cmsis_lib/include/stm32f4xx_exti.h" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.c" path="cmsis_boot/system_stm32f4xx.c" type="1"/>
     <File name="serialUSB/usbd_ioreq.h" path="serialUSB/usbd_ioreq.h" type="1"/>
     <File name="serialUSB/usb_core.h" path="serialUSB/usb_core.h" type="1"/>

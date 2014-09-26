@@ -1,25 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dependencies>
    <includePath signature="/I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\MadgwickAHRS /I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis /I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib /I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib\include /I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\serialUSB /I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU /I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_boot /I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain">
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="1453daedfe1">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usb_dcd_int.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_dcd.h"/>
-      </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h" lastModified="1456230c9c0">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\serialUSB\usb_dcd_int.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_conf.h"/>
-         <include file="..\..\..\serialUSB\usb_dcd_int.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\include\misc.h" lastModified="1456200409e">
+      <source file="..\..\..\cmsis_lib\include\stm32f4xx_i2c.h" lastModified="1453dafc60a">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\serialUSB\usbd_desc.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_def.h"/>
+      <source file="..\..\..\cmsis\core_cmInstr.h" lastModified="1453daee542">
+      </source>
+      <source file="..\..\..\cmsis\core_cm4.h" lastModified="1453daee4d9">
+         <include file="..\..\..\cmsis\core_cmInstr.h"/>
+         <include file="..\..\..\cmsis\core_cmFunc.h"/>
+         <include file="..\..\..\cmsis\core_cm4_simd.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="1456230c9c1">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
@@ -29,116 +22,28 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rtc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\serialUSB\usbd_desc.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_core.h"/>
-         <include file="..\..\..\serialUSB\usbd_desc.h"/>
-         <include file="..\..\..\serialUSB\usbd_req.h"/>
-         <include file="..\..\..\serialUSB\usbd_conf.h"/>
-         <include file="..\..\..\serialUSB\usb_regs.h"/>
+      <source file="..\..\..\cmsis_boot\system_stm32f4xx.h" lastModified="1453daee0ce">
       </source>
-      <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="1456200409f">
-         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+      <source file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h" lastModified="148b3134b1f">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="1453daf402d">
+      <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1453db5486c">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+      </source>
+      <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="1456207edce">
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\include\stm32f4xx_rtc.h" lastModified="14561ffbd26">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h" lastModified="1453daf402c">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_core.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_dcd.h"/>
-         <include file="..\..\..\serialUSB\usbd_def.h"/>
-         <include file="..\..\..\serialUSB\usbd_conf.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_core.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_core.h"/>
-         <include file="..\..\..\serialUSB\usbd_req.h"/>
-         <include file="..\..\..\serialUSB\usbd_ioreq.h"/>
-         <include file="..\..\..\serialUSB\usb_dcd_int.h"/>
-         <include file="..\..\..\serialUSB\usb_bsp.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usb_core.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_conf.h"/>
-         <include file="..\..\..\serialUSB\usb_regs.h"/>
-         <include file="..\..\..\serialUSB\usb_defines.h"/>
-      </source>
-      <source file="..\..\..\cmsis\core_cmFunc.h" lastModified="1453daee4f2">
-      </source>
-      <source file="..\..\..\serialUSB\usb_core.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_core.h"/>
-         <include file="..\..\..\serialUSB\usb_bsp.h"/>
-      </source>
-      <source file="..\..\..\cmsis\core_cm4_simd.h" lastModified="1453daee4e6">
-      </source>
-      <source file="..\..\..\serialUSB\usb_defines.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_conf.h"/>
-      </source>
-      <source file="..\..\..\cmsis_boot\stm32f4xx.h" lastModified="1453db9ddb4">
-         <include file="..\..\..\cmsis\core_cm4.h"/>
-         <include file="..\..\..\cmsis_boot\system_stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_ioreq.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_def.h"/>
-         <include file="..\..\..\serialUSB\usbd_core.h"/>
-      </source>
-      <source file="..\..\..\MadgwickAHRS\MadgwickAHRS.h" lastModified="132c50260e0">
-      </source>
-      <source file="..\..\..\serialUSB\usbd_cdc_vcp.h" lastModified="140dbad4748">
-         <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
-         <include file="..\..\..\serialUSB\usbd_cdc_core.h"/>
-         <include file="..\..\..\serialUSB\usbd_conf.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_conf.h" lastModified="140dbad4360">
-      </source>
-      <source file="..\..\..\serialUSB\usb_bsp.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_core.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_ioreq.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_ioreq.h"/>
-      </source>
-      <source file="..\..\..\MadgwickAHRS\MadgwickAHRS.c" lastModified="145ce250048">
-         <include file="..\..\..\MadgwickAHRS\MadgwickAHRS.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_cdc_vcp.c" lastModified="1474144670d">
-         <include file="..\..\..\serialUSB\usbd_cdc_vcp.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h" lastModified="1474146458e">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_usr.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_core.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h" lastModified="1453daedfe0">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\serialUSB\usb_bsp.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_bsp.h"/>
-         <include file="..\..\..\serialUSB\usbd_conf.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\misc.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_i2c.c" lastModified="1453dafc60c">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_i2c.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usb_conf.h" lastModified="140dbad4360">
+      <source file="..\..\..\cmsis_lib\include\misc.h" lastModified="1456200409e">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\serialUSB\usbd_usr.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_usr.h"/>
-         <include file="..\..\..\serialUSB\usbd_ioreq.h"/>
+      <source file="..\..\..\cmsis_lib\include\stm32f4xx_rtc.h" lastModified="14561ffbd26">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\cmsis_lib\include\stm32f4xx_i2c.h" lastModified="1453dafc60a">
+      <source file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h" lastModified="148b3134b1f">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\cmsis_boot\stm32f4xx_conf.h" lastModified="1453daf1f3f">
@@ -152,68 +57,41 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h"/>
          <include file="..\..\..\cmsis_lib\include\misc.h"/>
       </source>
-      <source file="..\..\..\cmsis\core_cmInstr.h" lastModified="1453daee542">
-      </source>
-      <source file="..\..\..\serialUSB\usb_regs.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_conf.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_req.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_def.h"/>
-         <include file="..\..\..\serialUSB\usbd_core.h"/>
-         <include file="..\..\..\serialUSB\usbd_conf.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h" lastModified="1474145c67e">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_usart.c" lastModified="1474145c681">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_cdc_core.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_ioreq.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usb_dcd.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_core.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_req.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_req.h"/>
-         <include file="..\..\..\serialUSB\usbd_ioreq.h"/>
-         <include file="..\..\..\serialUSB\usbd_desc.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_cdc_core.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_cdc_core.h"/>
-         <include file="..\..\..\serialUSB\usbd_desc.h"/>
-         <include file="..\..\..\serialUSB\usbd_req.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usbd_def.h" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usbd_conf.h"/>
-      </source>
-      <source file="..\..\..\serialUSB\usb_dcd.c" lastModified="140dbad4360">
-         <include file="..\..\..\serialUSB\usb_conf.h"/>
-         <include file="..\..\..\serialUSB\usb_dcd.h"/>
-         <include file="..\..\..\serialUSB\usb_bsp.h"/>
-      </source>
-      <source file="..\..\..\cmsis\core_cm4.h" lastModified="1453daee4d9">
-         <include file="..\..\..\cmsis\core_cmInstr.h"/>
-         <include file="..\..\..\cmsis\core_cmFunc.h"/>
-         <include file="..\..\..\cmsis\core_cm4_simd.h"/>
-      </source>
-      <source file="..\..\..\cmsis_boot\system_stm32f4xx.h" lastModified="1453daee0ce">
-      </source>
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="1456207edce">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+      <source file="..\..\..\cmsis_boot\stm32f4xx.h" lastModified="1453db9ddb4">
+         <include file="..\..\..\cmsis\core_cm4.h"/>
+         <include file="..\..\..\cmsis_boot\system_stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h" lastModified="1456207edcd">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
+      <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="1456200409f">
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+      </source>
+      <source file="..\..\..\cmsis\core_cmFunc.h" lastModified="1453daee4f2">
+      </source>
+      <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="1453daf402d">
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+      </source>
+      <source file="..\..\..\MadgwickAHRS\MadgwickAHRS.h" lastModified="132c50260e0">
+      </source>
       <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="1453daee04f">
       </source>
-      <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1453db5486c">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+      <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="1453daedfe1">
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_exti.c" lastModified="1474146458f">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h"/>
+      <source file="..\..\..\cmsis\core_cm4_simd.h" lastModified="1453daee4e6">
+      </source>
+      <source file="..\..\..\cmsis_lib\source\stm32f4xx_i2c.c" lastModified="1453dafc60c">
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_i2c.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+      </source>
+      <source file="..\..\..\MadgwickAHRS\MadgwickAHRS.c" lastModified="145ce250048">
+         <include file="..\..\..\MadgwickAHRS\MadgwickAHRS.h"/>
+      </source>
+      <source file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h" lastModified="1453daf402c">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
    </includePath>
 </dependencies>

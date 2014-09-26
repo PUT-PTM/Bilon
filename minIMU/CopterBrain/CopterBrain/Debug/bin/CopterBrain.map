@@ -1606,26 +1606,26 @@ LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2013q4/bin/../lib/gcc/arm
 END GROUP
 OUTPUT(CopterBrain.elf elf32-littlearm)
 
-.debug_info     0x00000000     0xea62
+.debug_info     0x00000000     0xea63
  .debug_info    0x00000000     0x24ef ..\obj\usb_core.o
  .debug_info    0x000024ef      0x1b5 ..\obj\usbd_usr.o
  .debug_info    0x000026a4       0xed ..\obj\startup_stm32f4xx.o
  .debug_info    0x00002791      0xe69 ..\obj\usbd_core.o
- .debug_info    0x000035fa     0x1a66 ..\obj\main.o
- .debug_info    0x00005060      0xc21 ..\obj\stm32f4xx_rcc.o
- .debug_info    0x00005c81      0x342 ..\obj\usbd_desc.o
- .debug_info    0x00005fc3      0x5d6 ..\obj\stm32f4xx_gpio.o
- .debug_info    0x00006599      0x482 ..\obj\usbd_cdc_vcp.o
- .debug_info    0x00006a1b      0x566 ..\obj\system_stm32f4xx.o
- .debug_info    0x00006f81      0xfd8 ..\obj\usb_bsp.o
- .debug_info    0x00007f59      0xf6f ..\obj\usbd_req.o
- .debug_info    0x00008ec8     0x1d41 ..\obj\usb_dcd_int.o
- .debug_info    0x0000ac09      0xec6 ..\obj\usbd_cdc_core.o
- .debug_info    0x0000bacf      0xac8 ..\obj\stm32f4xx_i2c.o
- .debug_info    0x0000c597      0x331 ..\obj\stm32f4xx_exti.o
- .debug_info    0x0000c8c8      0x51c ..\obj\misc.o
- .debug_info    0x0000cde4      0xff3 ..\obj\usb_dcd.o
- .debug_info    0x0000ddd7      0xc8b ..\obj\usbd_ioreq.o
+ .debug_info    0x000035fa     0x1a67 ..\obj\main.o
+ .debug_info    0x00005061      0xc21 ..\obj\stm32f4xx_rcc.o
+ .debug_info    0x00005c82      0x342 ..\obj\usbd_desc.o
+ .debug_info    0x00005fc4      0x5d6 ..\obj\stm32f4xx_gpio.o
+ .debug_info    0x0000659a      0x482 ..\obj\usbd_cdc_vcp.o
+ .debug_info    0x00006a1c      0x566 ..\obj\system_stm32f4xx.o
+ .debug_info    0x00006f82      0xfd8 ..\obj\usb_bsp.o
+ .debug_info    0x00007f5a      0xf6f ..\obj\usbd_req.o
+ .debug_info    0x00008ec9     0x1d41 ..\obj\usb_dcd_int.o
+ .debug_info    0x0000ac0a      0xec6 ..\obj\usbd_cdc_core.o
+ .debug_info    0x0000bad0      0xac8 ..\obj\stm32f4xx_i2c.o
+ .debug_info    0x0000c598      0x331 ..\obj\stm32f4xx_exti.o
+ .debug_info    0x0000c8c9      0x51c ..\obj\misc.o
+ .debug_info    0x0000cde5      0xff3 ..\obj\usb_dcd.o
+ .debug_info    0x0000ddd8      0xc8b ..\obj\usbd_ioreq.o
 
 .debug_abbrev   0x00000000     0x2296
  .debug_abbrev  0x00000000      0x2e7 ..\obj\usb_core.o
