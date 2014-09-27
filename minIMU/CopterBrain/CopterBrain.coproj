@@ -72,6 +72,7 @@
     <ExcludeFile/>
   </Target>
   <Components path="./">
+    <Component id="30" name="C Library" path="" type="2"/>
     <Component id="54" name="M4 CMSIS Core" path="" type="2"/>
     <Component id="500" name="CMSIS BOOT" path="" type="2"/>
     <Component id="501" name="RCC" path="" type="2"/>
@@ -88,22 +89,23 @@
     <File name="cmsis_lib/source/stm32f4xx_gpio.c" path="cmsis_lib/source/stm32f4xx_gpio.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_i2c.h" path="cmsis_lib/include/stm32f4xx_i2c.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
-    <File name="serialUSB/usbd_ioreq.c" path="serialUSB/usbd_ioreq.c" type="1"/>
     <File name="serialUSB/usbd_desc.c" path="serialUSB/usbd_desc.c" type="1"/>
+    <File name="serialUSB/usbd_ioreq.c" path="serialUSB/usbd_ioreq.c" type="1"/>
     <File name="AHRS/PololuAHRS.h" path="AHRS/PololuAHRS.h" type="1"/>
+    <File name="millis/millis_micros.h" path="millis/millis_micros.h" type="1"/>
     <File name="serialUSB/usb_regs.h" path="serialUSB/usb_regs.h" type="1"/>
     <File name="serialUSB/usbd_core.h" path="serialUSB/usbd_core.h" type="1"/>
-    <File name="serialUSB/usbd_req.c" path="serialUSB/usbd_req.c" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
-    <File name="cmsis_lib/include/stm32f4xx_syscfg.h" path="cmsis_lib/include/stm32f4xx_syscfg.h" type="1"/>
+    <File name="serialUSB/usbd_req.c" path="serialUSB/usbd_req.c" type="1"/>
     <File name="serialUSB/usb_dcd.h" path="serialUSB/usb_dcd.h" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_syscfg.h" path="cmsis_lib/include/stm32f4xx_syscfg.h" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
-    <File name="serialUSB/usbd_usr.c" path="serialUSB/usbd_usr.c" type="1"/>
     <File name="serialUSB/usbd_cdc_core.h" path="serialUSB/usbd_cdc_core.h" type="1"/>
+    <File name="serialUSB/usbd_usr.c" path="serialUSB/usbd_usr.c" type="1"/>
     <File name="serialUSB/usb_conf.h" path="serialUSB/usb_conf.h" type="1"/>
-    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
-    <File name="cmsis_boot/startup" path="" type="2"/>
     <File name="cmsis/core_cm4_simd.h" path="cmsis/core_cm4_simd.h" type="1"/>
+    <File name="cmsis_boot/startup" path="" type="2"/>
+    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="cmsis/core_cm4.h" path="cmsis/core_cm4.h" type="1"/>
     <File name="minIMU/minIMU.c" path="minIMU/minIMU.c" type="1"/>
@@ -111,13 +113,15 @@
     <File name="AHRS" path="" type="2"/>
     <File name="cmsis_lib/source/misc.c" path="cmsis_lib/source/misc.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_tim.h" path="cmsis_lib/include/stm32f4xx_tim.h" type="1"/>
+    <File name="syscalls/syscalls.c" path="syscalls/syscalls.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_i2c.c" path="cmsis_lib/source/stm32f4xx_i2c.c" type="1"/>
     <File name="serialUSB/usb_dcd.c" path="serialUSB/usb_dcd.c" type="1"/>
     <File name="cmsis_lib/source" path="" type="2"/>
     <File name="serialUSB/usbd_conf.h" path="serialUSB/usbd_conf.h" type="1"/>
-    <File name="minIMU/minIMU.h" path="minIMU/minIMU.h" type="1"/>
-    <File name="cmsis_boot/stm32f4xx_conf.h" path="cmsis_boot/stm32f4xx_conf.h" type="1"/>
     <File name="serialUSB/usbd_cdc_vcp.c" path="serialUSB/usbd_cdc_vcp.c" type="1"/>
+    <File name="cmsis_boot/stm32f4xx_conf.h" path="cmsis_boot/stm32f4xx_conf.h" type="1"/>
+    <File name="minIMU/minIMU.h" path="minIMU/minIMU.h" type="1"/>
+    <File name="millis" path="" type="2"/>
     <File name="cmsis_boot/system_stm32f4xx.h" path="cmsis_boot/system_stm32f4xx.h" type="1"/>
     <File name="serialUSB/usbd_cdc_core.c" path="serialUSB/usbd_cdc_core.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_rtc.c" path="cmsis_lib/source/stm32f4xx_rtc.c" type="1"/>
@@ -127,34 +131,36 @@
     <File name="serialUSB" path="" type="2"/>
     <File name="cmsis_boot/startup/startup_stm32f4xx.c" path="cmsis_boot/startup/startup_stm32f4xx.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
-    <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
     <File name="serialUSB/usb_bsp.h" path="serialUSB/usb_bsp.h" type="1"/>
+    <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
     <File name="serialUSB/usb_dcd_int.c" path="serialUSB/usb_dcd_int.c" type="1"/>
     <File name="minIMU" path="" type="2"/>
     <File name="serialUSB/usbd_cdc_vcp.h" path="serialUSB/usbd_cdc_vcp.h" type="1"/>
     <File name="serialUSB/usbd_usr.h" path="serialUSB/usbd_usr.h" type="1"/>
-    <File name="cmsis_lib/include/stm32f4xx_exti.h" path="cmsis_lib/include/stm32f4xx_exti.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_exti.c" path="cmsis_lib/source/stm32f4xx_exti.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_exti.h" path="cmsis_lib/include/stm32f4xx_exti.h" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.c" path="cmsis_boot/system_stm32f4xx.c" type="1"/>
     <File name="serialUSB/usbd_ioreq.h" path="serialUSB/usbd_ioreq.h" type="1"/>
     <File name="serialUSB/usb_core.h" path="serialUSB/usb_core.h" type="1"/>
     <File name="cmsis" path="" type="2"/>
-    <File name="serialUSB/usb_dcd_int.h" path="serialUSB/usb_dcd_int.h" type="1"/>
     <File name="cmsis_lib" path="" type="2"/>
+    <File name="serialUSB/usb_dcd_int.h" path="serialUSB/usb_dcd_int.h" type="1"/>
+    <File name="millis/millis_micros.c" path="millis/millis_micros.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_tim.c" path="cmsis_lib/source/stm32f4xx_tim.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_gpio.h" path="cmsis_lib/include/stm32f4xx_gpio.h" type="1"/>
     <File name="serialUSB/usb_bsp.c" path="serialUSB/usb_bsp.c" type="1"/>
-    <File name="cmsis_lib/include/stm32f4xx_rtc.h" path="cmsis_lib/include/stm32f4xx_rtc.h" type="1"/>
+    <File name="syscalls" path="" type="2"/>
     <File name="serialUSB/usb_defines.h" path="serialUSB/usb_defines.h" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_rtc.h" path="cmsis_lib/include/stm32f4xx_rtc.h" type="1"/>
     <File name="serialUSB/usbd_core.c" path="serialUSB/usbd_core.c" type="1"/>
     <File name="serialUSB/usbd_def.h" path="serialUSB/usbd_def.h" type="1"/>
-    <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
     <File name="serialUSB/usb_core.c" path="serialUSB/usb_core.c" type="1"/>
+    <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
     <File name="serialUSB/usbd_desc.h" path="serialUSB/usbd_desc.h" type="1"/>
-    <File name="cmsis_lib/include" path="" type="2"/>
     <File name="MadgwickAHRS/MadgwickAHRS.h" path="MadgwickAHRS/MadgwickAHRS.h" type="1"/>
+    <File name="cmsis_lib/include" path="" type="2"/>
     <File name="MadgwickAHRS" path="" type="2"/>
-    <File name="serialUSB/usbd_req.h" path="serialUSB/usbd_req.h" type="1"/>
     <File name="main.c" path="main.c" type="1"/>
+    <File name="serialUSB/usbd_req.h" path="serialUSB/usbd_req.h" type="1"/>
   </Files>
 </Project>

@@ -1,5 +1,5 @@
 //=====================================================================================================
-// MadgwickAHRS.h
+// minIMU.h
 //=====================================================================================================
 #ifndef minIMU_h
 #define minIMU_h
@@ -32,6 +32,9 @@ void Read_Gyro();
 void Read_Accel();
 void Read_Compass();
 
-
+extern uint8_t AN_OFFSET[6];
+extern uint8_t AN[6];
+extern uint8_t SENSOR_SIGN[9];
+extern uint8_t gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z, magnetom_x, magnetom_y, magnetom_z;
 
 #endif

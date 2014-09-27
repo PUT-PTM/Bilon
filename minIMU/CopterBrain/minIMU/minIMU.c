@@ -3,7 +3,8 @@
 
 __ALIGN_BEGIN USB_OTG_CORE_HANDLE USB_OTG_dev __ALIGN_END;
 
-uint8_t gx,gy,gz,ax,ay,az,mx,my,mz;
+uint8_t gx, gy, gz, ax, ay, az, mx, my, mz;
+int aa,bb,cc;
 
 void I2C1_init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -154,9 +155,12 @@ void Read_Gyro() {
 
 	//I2C_stop(I2C1);
 
-	gx = (int16_t)(xhg << 8 | xlg);
-	gy = (int16_t)(yhg << 8 | ylg);
-	gz = (int16_t)(zhg << 8 | zlg);
+	aa = AN[0] = (int16_t)(xhg << 8 | xlg);
+	bb = AN[1] = (int16_t)(yhg << 8 | ylg);
+	cc = AN[2] = (int16_t)(zhg << 8 | zlg);
+	gyro_x = SENSOR_SIGN[0] * (AN[0] - AN_OFFSET[0]);
+	gyro_y = SENSOR_SIGN[1] * (AN[1] - AN_OFFSET[1]);
+	gyro_z = SENSOR_SIGN[2] * (AN[2] - AN_OFFSET[2]);
 }
 
 void Read_Accel() {
@@ -174,9 +178,12 @@ void Read_Accel() {
 
 	//I2C_stop(I2C1);
 	// 12 bitowa odpowiedz (przesuniecie o 4 bit w  prawo)
-	ax = (int16_t)((xha << 8 | xla)) >> 4;
-	ay = (int16_t)((yha << 8 | yla)) >> 4;
-	az = (int16_t)((zha << 8 | zla)) >> 4;
+	AN[3] = (int16_t)((xha << 8 | xla)) >> 4;
+	AN[4] = (int16_t)((yha << 8 | yla)) >> 4;
+	AN[5] = (int16_t)((zha << 8 | zla)) >> 4;
+	accel_x = SENSOR_SIGN[3] * (AN[3] - AN_OFFSET[3]);
+	accel_y = SENSOR_SIGN[4] * (AN[4] - AN_OFFSET[4]);
+	accel_z = SENSOR_SIGN[5] * (AN[5] - AN_OFFSET[5]);
 }
 
 void Read_Compass() {
@@ -194,9 +201,9 @@ void Read_Compass() {
 	uint8_t ylm = I2C_read_nack(I2C1);
 
 	//I2C_stop(I2C1);
-	mx = (int16_t)(xhm << 8 | xlm);
-	my = (int16_t)(yhm << 8 | ylm);
-	mz = (int16_t)(zhm << 8 | zlm);
+	magnetom_x = SENSOR_SIGN[6] * (int16_t)(xhm << 8 | xlm);
+	magnetom_y = SENSOR_SIGN[7] * (int16_t)(yhm << 8 | ylm);
+	magnetom_z = SENSOR_SIGN[8] * (int16_t)(zhm << 8 | zlm);
 }
 
 void configInit() {
@@ -222,7 +229,7 @@ void configInit() {
 	//zyroskop (Gyro)
 	I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
 	I2C_write(I2C1, 0x20); // L3G_CTRL_REG1 0x20
-	I2C_write(I2C1, 0xBF); // 0x0F = 0b00001111
+	I2C_write(I2C1, 0x0F); // 0x0F = 0b00001111
 						   // ODR 100Hz Cut-off 12.5
 						   // Normal power mode, all axes enabled
 
@@ -230,7 +237,7 @@ void configInit() {
 	I2C_start(I2C1, GYRO_ADDRESS, I2C_Direction_Transmitter);
 
 	I2C_write(I2C1, 0x23); // CTRL_REG4
-	I2C_write(I2C1, 0x10);
+	I2C_write(I2C1, 0x20);
 
 	I2C_stop(I2C1);
 
@@ -246,7 +253,7 @@ void configInit() {
 	I2C_start(I2C1, ACCEL_ADDRESS, I2C_Direction_Transmitter);
 
 	I2C_write(I2C1, 0x23);
-	I2C_write(I2C1, 0x30);
+	I2C_write(I2C1, 0x30); // 30
 
 	I2C_stop(I2C1);
 
