@@ -1,35 +1,35 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="4.8.3 -mcpu=cortex-m4 -mthumb -g -nostartfiles -Map=CopterBrain.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\CopterBrain -TC:\CooCox\CoIDE\configuration\ProgramData\CopterBrain/arm-gcc-link.ld -g -L..\..\.. -lm">
-      <target file="CopterBrain.elf" lastModified="148b4f5f8cb">
-         <source file="..\obj\stm32f4xx_syscfg.o" lastModified="148b4f5ea3a"/>
-         <source file="..\obj\usb_core.o" lastModified="148b4f5eaef"/>
-         <source file="..\obj\usbd_usr.o" lastModified="148b4f5eb59"/>
-         <source file="..\obj\stm32f4xx_usart.o" lastModified="148b4f5ebcf"/>
-         <source file="..\obj\PololuAHRS.o" lastModified="148b4f5ec56"/>
-         <source file="..\obj\startup_stm32f4xx.o" lastModified="148b4f5ec94"/>
-         <source file="..\obj\MadgwickAHRS.o" lastModified="148b4f5ed22"/>
-         <source file="..\obj\usbd_core.o" lastModified="148b4f5ed92"/>
-         <source file="..\obj\main.o" lastModified="148b4f5ee0d"/>
-         <source file="..\obj\stm32f4xx_rcc.o" lastModified="148b4f5ee8a"/>
-         <source file="..\obj\minIMU.o" lastModified="148b4f5ef09"/>
-         <source file="..\obj\usbd_desc.o" lastModified="148b4f5ef64"/>
-         <source file="..\obj\stm32f4xx_gpio.o" lastModified="148b4f5efc6"/>
-         <source file="..\obj\usbd_cdc_vcp.o" lastModified="148b4f5f029"/>
-         <source file="..\obj\system_stm32f4xx.o" lastModified="148b4f5f07c"/>
-         <source file="..\obj\syscalls.o" lastModified="148b4f5f0d0"/>
-         <source file="..\obj\usb_bsp.o" lastModified="148b4f5f12f"/>
-         <source file="..\obj\usbd_req.o" lastModified="148b4f5f1a4"/>
-         <source file="..\obj\usb_dcd_int.o" lastModified="148b4f5f220"/>
-         <source file="..\obj\usbd_cdc_core.o" lastModified="148b4f5f288"/>
-         <source file="..\obj\millis_micros.o" lastModified="148b4f5f2e5"/>
-         <source file="..\obj\stm32f4xx_i2c.o" lastModified="148b4f5f36f"/>
-         <source file="..\obj\stm32f4xx_exti.o" lastModified="148b4f5f3c8"/>
-         <source file="..\obj\misc.o" lastModified="148b4f5f41c"/>
-         <source file="..\obj\usb_dcd.o" lastModified="148b4f5f488"/>
-         <source file="..\obj\stm32f4xx_rtc.o" lastModified="148b4f5f52d"/>
-         <source file="..\obj\usbd_ioreq.o" lastModified="148b4f5f58b"/>
-         <source file="..\obj\stm32f4xx_tim.o" lastModified="148b4f5f647"/>
+      <target file="CopterBrain.elf" lastModified="148be5a5eff">
+         <source file="..\obj\stm32f4xx_syscfg.o" lastModified="148be5a4f0d"/>
+         <source file="..\obj\usb_core.o" lastModified="148be5a4fb4"/>
+         <source file="..\obj\usbd_usr.o" lastModified="148be5a503a"/>
+         <source file="..\obj\stm32f4xx_usart.o" lastModified="148be5a50c0"/>
+         <source file="..\obj\PololuAHRS.o" lastModified="148be5a5164"/>
+         <source file="..\obj\startup_stm32f4xx.o" lastModified="148be5a51a1"/>
+         <source file="..\obj\MadgwickAHRS.o" lastModified="148be5a521e"/>
+         <source file="..\obj\usbd_core.o" lastModified="148be5a5287"/>
+         <source file="..\obj\main.o" lastModified="148be5a537a"/>
+         <source file="..\obj\stm32f4xx_rcc.o" lastModified="148be5a5410"/>
+         <source file="..\obj\minIMU.o" lastModified="148be5a54a8"/>
+         <source file="..\obj\usbd_desc.o" lastModified="148be5a5507"/>
+         <source file="..\obj\stm32f4xx_gpio.o" lastModified="148be5a5567"/>
+         <source file="..\obj\usbd_cdc_vcp.o" lastModified="148be5a55ca"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="148be5a561d"/>
+         <source file="..\obj\syscalls.o" lastModified="148be5a5671"/>
+         <source file="..\obj\usb_bsp.o" lastModified="148be5a56d1"/>
+         <source file="..\obj\usbd_req.o" lastModified="148be5a5747"/>
+         <source file="..\obj\usb_dcd_int.o" lastModified="148be5a57d9"/>
+         <source file="..\obj\usbd_cdc_core.o" lastModified="148be5a5858"/>
+         <source file="..\obj\millis_micros.o" lastModified="148be5a58c0"/>
+         <source file="..\obj\stm32f4xx_i2c.o" lastModified="148be5a5936"/>
+         <source file="..\obj\stm32f4xx_exti.o" lastModified="148be5a598d"/>
+         <source file="..\obj\misc.o" lastModified="148be5a59e0"/>
+         <source file="..\obj\usb_dcd.o" lastModified="148be5a5a4a"/>
+         <source file="..\obj\stm32f4xx_rtc.o" lastModified="148be5a5aeb"/>
+         <source file="..\obj\usbd_ioreq.o" lastModified="148be5a5b58"/>
+         <source file="..\obj\stm32f4xx_tim.o" lastModified="148be5a5c13"/>
       </target>
    </processor>
 </history>

@@ -19,10 +19,9 @@ void init_millis_micros(void)
 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 
-
-	TIM_TimeBaseStructure.TIM_Prescaler = 168-1 ;
+	TIM_TimeBaseStructure.TIM_Prescaler = 168;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Period = 1000-1 ;
+	TIM_TimeBaseStructure.TIM_Period = 500;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 
@@ -35,7 +34,6 @@ void init_millis_micros(void)
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 
 	TIM_Cmd(TIM2, ENABLE);
-
 }
 //===========================================================================
 //===========================================================================

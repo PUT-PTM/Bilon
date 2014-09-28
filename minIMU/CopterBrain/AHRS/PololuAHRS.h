@@ -42,7 +42,7 @@ void Vector_Scale(float vectorOut[3], float vectorIn[3], float scale2);
 void Vector_Add(float vectorOut[3], float vectorIn1[3], float vectorIn2[3]);
 
 extern float c_magnetom_x, c_magnetom_y, c_magnetom_z;
-extern uint8_t gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z, magnetom_x, magnetom_y, magnetom_z;
+extern int16_t gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z, magnetom_x, magnetom_y, magnetom_z;
 
 extern float Omega_P[3]; //Omega Proportional correction
 extern float Omega_I[3]; //Omega Integrator
@@ -50,7 +50,7 @@ extern float Omega[3];
 
 extern float G_Dt;
 extern float MAG_Heading;
-extern uint8_t SENSOR_SIGN[9];
+extern int8_t SENSOR_SIGN[9];
 
 extern float roll;
 extern float pitch;

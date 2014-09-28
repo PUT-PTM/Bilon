@@ -3,9 +3,6 @@
 
 __ALIGN_BEGIN USB_OTG_CORE_HANDLE USB_OTG_dev __ALIGN_END;
 
-uint8_t gx, gy, gz, ax, ay, az, mx, my, mz;
-int aa,bb,cc;
-
 void I2C1_init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 	I2C_InitTypeDef I2C_InitStruct;
@@ -155,9 +152,9 @@ void Read_Gyro() {
 
 	//I2C_stop(I2C1);
 
-	aa = AN[0] = (int16_t)(xhg << 8 | xlg);
-	bb = AN[1] = (int16_t)(yhg << 8 | ylg);
-	cc = AN[2] = (int16_t)(zhg << 8 | zlg);
+	AN[0] = (int16_t)(xhg << 8 | xlg);
+	AN[1] = (int16_t)(yhg << 8 | ylg);
+	AN[2] = (int16_t)(zhg << 8 | zlg);
 	gyro_x = SENSOR_SIGN[0] * (AN[0] - AN_OFFSET[0]);
 	gyro_y = SENSOR_SIGN[1] * (AN[1] - AN_OFFSET[1]);
 	gyro_z = SENSOR_SIGN[2] * (AN[2] - AN_OFFSET[2]);

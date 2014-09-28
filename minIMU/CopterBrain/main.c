@@ -14,18 +14,18 @@
 #define GRAVITY 256  //this equivalent to 1G in the raw data coming from the accelerometer
 #define ToRad(x) ((x)*0.01745329252)  // *pi/180
 #define ToDeg(x) ((x)*57.2957795131)  // *180/pi
-
 // !-!
-uint8_t SENSOR_SIGN[9] = { 1, 1, 1, -1, -1, -1, 1, 1, 1 }; //Correct directions x,y,z - gyro, accelerometer, magnetometer
+int8_t SENSOR_SIGN[9] = { 1, 1, 1, -1, -1, -1, 1, 1, 1 }; //Correct directions x,y,z - gyro, accelerometer, magnetometer
 
 float G_Dt = 0.02; // Integration time (DCM algorithm)  We will run the integration loop at 50Hz if possible
 
 uint32_t timer = 0, timer_old;
 uint32_t timer24 = 0; //Second timer used to print values
-uint8_t AN[6]; //array that stores the gyro and accelerometer data
-uint8_t AN_OFFSET[6] = { 0, 0, 0, 0, 0, 0 }; //Array that stores the Offset of the sensors
+int16_t AN[6]; //array that stores the gyro and accelerometer data
+int16_t AN_OFFSET[6] = { 0, 0, 0, 0, 0, 0 }; //Array that stores the Offset of the sensors
 
-uint8_t gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z, magnetom_x, magnetom_y, magnetom_z;
+int16_t gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z, magnetom_x,
+		magnetom_y, magnetom_z;
 float c_magnetom_x, c_magnetom_y, c_magnetom_z;
 float MAG_Heading;
 
@@ -88,7 +88,7 @@ void SysTick_Handler(void) {
 
 //--------------------------------------------
 int main(void) {
-	unsigned int i,y;
+	unsigned int i, y;
 	SystemInit();
 	SystemCoreClockUpdate();
 
@@ -96,8 +96,6 @@ int main(void) {
 	// Init Accel Compass Gyro
 	configInit();
 	init_millis_micros();
-	// Przerwanie 50 x na sec
-	SysTick_Config(SystemCoreClock / 50);
 
 	for (i = 0; i < 32; i++) {
 		Read_Gyro();
@@ -110,7 +108,6 @@ int main(void) {
 		AN_OFFSET[y] = AN_OFFSET[y] / 32;
 
 	AN_OFFSET[5] -= GRAVITY * SENSOR_SIGN[5];
-
 	delay(2000);
 
 	timer = millis();
@@ -118,17 +115,17 @@ int main(void) {
 	delay(20);
 	counter = 0;
 
+	// Przerwanie 50 x na sec
+	SysTick_Config(SystemCoreClock / 50);
 
-	while(1);
+	while (1);
 	return 0;
 }
 
-
-void printdata()
-{
-//	uint8_t s[255];
-//	if (!VCP_get_char(&theByte)) {
-//		sprintf(s, "!ANG:%f,%f,%f\n", ToDeg(roll), ToDeg(pitch), ToDeg(yaw));
-//		VCP_send_str(s);
-//	}
+void printdata() {
+	uint8_t s[255];
+	if (!VCP_get_char(&theByte)) {
+		sprintf(s, "!ANG:%f,%f,%f\n", ToDeg(roll), ToDeg(pitch), ToDeg(yaw));
+		VCP_send_str(s);
+	}
 }
