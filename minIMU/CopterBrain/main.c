@@ -15,6 +15,7 @@
 #define ToRad(x) ((x)*0.01745329252)  // *pi/180
 #define ToDeg(x) ((x)*57.2957795131)  // *180/pi
 // !-!
+//int8_t SENSOR_SIGN[9] = { 1, 1, 1, -1, -1, -1, 1, 1, 1 }; //Correct directions x,y,z - gyro, accelerometer, magnetometer
 int8_t SENSOR_SIGN[9] = { 1, 1, 1, -1, -1, -1, 1, 1, 1 }; //Correct directions x,y,z - gyro, accelerometer, magnetometer
 
 float G_Dt = 0.02; // Integration time (DCM algorithm)  We will run the integration loop at 50Hz if possible
@@ -26,6 +27,7 @@ int16_t AN_OFFSET[6] = { 0, 0, 0, 0, 0, 0 }; //Array that stores the Offset of t
 
 int16_t gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z, magnetom_x,
 		magnetom_y, magnetom_z;
+
 float c_magnetom_x, c_magnetom_y, c_magnetom_z;
 float MAG_Heading;
 
@@ -111,8 +113,6 @@ int main(void) {
 	delay(2000);
 
 	timer = millis();
-
-	delay(20);
 	counter = 0;
 
 	// Przerwanie 50 x na sec

@@ -1,88 +1,88 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m4 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F407VG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\MadgwickAHRS -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_lib\include -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\serialUSB -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\millis -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\minIMU -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\AHRS -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain\cmsis_boot -I..\..\..\..\..\Users\Adrian\Documents\GitHub\Bilon\minIMU\CopterBrain">
-      <target file="stm32f4xx_exti.o" lastModified="148be5a598d">
+      <target file="stm32f4xx_exti.o" lastModified="148be748414">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_exti.c" lastModified="148b3134b20"/>
       </target>
-      <target file="stm32f4xx_gpio.o" lastModified="148be5a5567">
+      <target file="stm32f4xx_gpio.o" lastModified="148be747fa3">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="1453daedfe1"/>
       </target>
-      <target file="usbd_core.o" lastModified="148be5a5287">
+      <target file="usbd_core.o" lastModified="148be747c5e">
          <source file="..\..\..\serialUSB\usbd_core.c" lastModified="148b3134b2c"/>
       </target>
-      <target file="usbd_desc.o" lastModified="148be5a5507">
+      <target file="usbd_desc.o" lastModified="148be747f3f">
          <source file="..\..\..\serialUSB\usbd_desc.c" lastModified="148b3134b2e"/>
       </target>
-      <target file="stm32f4xx_rtc.o" lastModified="148be5a5aeb">
+      <target file="stm32f4xx_rtc.o" lastModified="148be748585">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_rtc.c" lastModified="14561ffbd28"/>
       </target>
-      <target file="usbd_cdc_core.o" lastModified="148be5a5858">
+      <target file="usbd_cdc_core.o" lastModified="148be7482b6">
          <source file="..\..\..\serialUSB\usbd_cdc_core.c" lastModified="148b3134b29"/>
       </target>
-      <target file="usbd_cdc_vcp.o" lastModified="148be5a55ca">
+      <target file="usbd_cdc_vcp.o" lastModified="148be74800d">
          <source file="..\..\..\serialUSB\usbd_cdc_vcp.c" lastModified="148b3134b2a"/>
       </target>
-      <target file="usbd_ioreq.o" lastModified="148be5a5b58">
+      <target file="usbd_ioreq.o" lastModified="148be7485e6">
          <source file="..\..\..\serialUSB\usbd_ioreq.c" lastModified="148b3134b2f"/>
       </target>
-      <target file="millis_micros.o" lastModified="148be5a58c0">
+      <target file="millis_micros.o" lastModified="148be748313">
          <source file="..\..\..\millis\millis_micros.c" lastModified="148be51ea78"/>
       </target>
-      <target file="PololuAHRS.o" lastModified="148be5a5164">
+      <target file="PololuAHRS.o" lastModified="148be747af3">
          <source file="..\..\..\AHRS\PololuAHRS.c" lastModified="148be177c6a"/>
       </target>
-      <target file="stm32f4xx_syscfg.o" lastModified="148be5a4f0d">
+      <target file="stm32f4xx_syscfg.o" lastModified="148be747812">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="1456230c9c1"/>
       </target>
-      <target file="startup_stm32f4xx.o" lastModified="148be5a51a1">
+      <target file="startup_stm32f4xx.o" lastModified="148be747b34">
          <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="1453daee04f"/>
       </target>
-      <target file="stm32f4xx_tim.o" lastModified="148be5a5c13">
+      <target file="stm32f4xx_tim.o" lastModified="148be7486ac">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="1456207edce"/>
       </target>
-      <target file="system_stm32f4xx.o" lastModified="148be5a561d">
+      <target file="system_stm32f4xx.o" lastModified="148be748066">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1453db5486c"/>
       </target>
-      <target file="usb_bsp.o" lastModified="148be5a56d1">
+      <target file="usb_bsp.o" lastModified="148be748121">
          <source file="..\..\..\serialUSB\usb_bsp.c" lastModified="148b3134b22"/>
       </target>
-      <target file="misc.o" lastModified="148be5a59e0">
+      <target file="misc.o" lastModified="148be74846c">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="1456200409f"/>
       </target>
-      <target file="usbd_req.o" lastModified="148be5a5747">
+      <target file="usbd_req.o" lastModified="148be74819d">
          <source file="..\..\..\serialUSB\usbd_req.c" lastModified="148b3134b47"/>
       </target>
-      <target file="minIMU.o" lastModified="148be5a54a8">
+      <target file="minIMU.o" lastModified="148be747ede">
          <source file="..\..\..\minIMU\minIMU.c" lastModified="148be2f60db"/>
       </target>
-      <target file="usb_dcd.o" lastModified="148be5a5a4a">
+      <target file="usb_dcd.o" lastModified="148be7484dd">
          <source file="..\..\..\serialUSB\usb_dcd.c" lastModified="148b3134b26"/>
       </target>
-      <target file="usb_dcd_int.o" lastModified="148be5a57d9">
+      <target file="usb_dcd_int.o" lastModified="148be74821f">
          <source file="..\..\..\serialUSB\usb_dcd_int.c" lastModified="148b3134b27"/>
       </target>
-      <target file="stm32f4xx_rcc.o" lastModified="148be5a5410">
+      <target file="stm32f4xx_rcc.o" lastModified="148be747e58">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="1453daf402d"/>
       </target>
-      <target file="usb_core.o" lastModified="148be5a4fb4">
+      <target file="usb_core.o" lastModified="148be7478c4">
          <source file="..\..\..\serialUSB\usb_core.c" lastModified="148b3134b24"/>
       </target>
-      <target file="syscalls.o" lastModified="148be5a5671">
+      <target file="syscalls.o" lastModified="148be7480bd">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="148be146034"/>
       </target>
-      <target file="MadgwickAHRS.o" lastModified="148be5a521e">
+      <target file="MadgwickAHRS.o" lastModified="148be747bd5">
          <source file="..\..\..\MadgwickAHRS\MadgwickAHRS.c" lastModified="145ce24fc60"/>
       </target>
-      <target file="stm32f4xx_i2c.o" lastModified="148be5a5936">
+      <target file="stm32f4xx_i2c.o" lastModified="148be74839d">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_i2c.c" lastModified="1453dafc60c"/>
       </target>
-      <target file="usbd_usr.o" lastModified="148be5a503a">
+      <target file="usbd_usr.o" lastModified="148be747954">
          <source file="..\..\..\serialUSB\usbd_usr.c" lastModified="148b3134b48"/>
       </target>
-      <target file="main.o" lastModified="148be5a537a">
-         <source file="..\..\..\main.c" lastModified="148be5a25a9"/>
+      <target file="main.o" lastModified="148be747daf">
+         <source file="..\..\..\main.c" lastModified="148be727edd"/>
       </target>
-      <target file="stm32f4xx_usart.o" lastModified="148be5a50c0">
+      <target file="stm32f4xx_usart.o" lastModified="148be7479e6">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_usart.c" lastModified="148b3134b21"/>
       </target>
    </processor>
