@@ -40,18 +40,24 @@ static inline void GPIO_outputInit(void){
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 |GPIO_Pin_4;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 |GPIO_Pin_4 |GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 |GPIO_Pin_8 |GPIO_Pin_9;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
 		GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-		GPIO_ResetBits(GPIOD, FAZA_VD);
+		GPIO_ResetBits(GPIOD, FAZA_VDG);
+		GPIO_ResetBits(GPIOD, FAZA_VDD);
+
 		GPIO_ResetBits(GPIOD, FAZA_VG);
-		GPIO_ResetBits(GPIOD, FAZA_WD);
+		GPIO_ResetBits(GPIOD, FAZA_WDG);
+		GPIO_ResetBits(GPIOD, FAZA_WDD);
+
 		GPIO_ResetBits(GPIOD, FAZA_WG);
-		GPIO_ResetBits(GPIOD, FAZA_UD);
+		GPIO_ResetBits(GPIOD, FAZA_UDG);
+		GPIO_ResetBits(GPIOD, FAZA_UDD);
+
 		GPIO_ResetBits(GPIOD, FAZA_UG);
 }
 
@@ -62,7 +68,7 @@ static inline void PWM_initIO(void)
 
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_11 | GPIO_Pin_13 |GPIO_Pin_14;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_11 | GPIO_Pin_13 |GPIO_Pin_14;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
@@ -70,6 +76,8 @@ static inline void PWM_initIO(void)
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 
 	/* Connect TIM pins to AF */
+	GPIO_PinAFConfig(GPIOE, GPIO_PinSource8, GPIO_AF_TIM1);
+
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1);
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
 	GPIO_PinAFConfig(GPIOE, GPIO_PinSource13, GPIO_AF_TIM1);
@@ -133,7 +141,7 @@ static inline void TIMER_t1Init(void)
 
 	TIMER_t1Start();
 }
-
+/*
 static inline void ADC_initIO(void)
 {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE); //pwr for ADC1
@@ -149,6 +157,7 @@ static inline void ADC_initIO(void)
 
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
+*/
 
 static inline void ADC_adc1Init(void)
 {
@@ -164,11 +173,11 @@ static inline void ADC_adc1Init(void)
 	ADC1->CR2 |= ADC_CR2_ADON | ADC_CR2_DMA | ADC_CR2_DDS;
 	ADC1->SMPR2 = (uint32_t) 0x00000000; //3 cykle dla wszystkich kana³ów
 	ADC1->SQR1 = (uint32_t) 0x00000000;
-	ADC1->SQR1 |= ADC_SQR1_L2;
+	ADC1->SQR1 |= ADC_SQR1_L_2;
 	ADC1->SQR3 = (uint32_t) 0x00000000;
 	ADC1->SQR3 |= ADC_SQR3_SQ1_0| ADC_SQR3_SQ2_1 | ADC_SQR3_SQ3_0 | ADC_SQR3_SQ3_1 | ADC_SQR3_SQ4_2;
 
-	ADC->CR2 |= ADC_CR2_SWSTART;
+	ADC1->CR2 |= ADC_CR2_SWSTART;
 	/*
 	ADC_InitTypeDef ADC_InitStructure;
 
@@ -235,19 +244,19 @@ static inline void Rozruch(int * krok){
 	//GPIO_SetBits(GPIOD, FAZA_WD);
 	turn_on(FAZA_WDG,FAZA_WDD);
 	GPIO_SetBits(GPIOD, FAZA_UG);
-	krok=2;
+	*krok=2;
 	int i = 20;
 	int j = 100000;
 	while((i--)>0)
 	{
-	switch(krok){
+	switch(*krok){
 
 				case 1:
 
 					{
 						//prze³¹czenie na krok 2
 						krok=2;
-						GPIO_ResetBits(GPIOD, FAZA_VD);
+
 						turn_off(FAZA_VDG, FAZA_VDD);
 						//GPIO_SetBits(GPIOD, FAZA_WD);
 						turn_on(FAZA_WDG,FAZA_WDD);
@@ -329,7 +338,7 @@ int main(void)
 	PWM_initIO();
 	TIMER_t1Init();
 
-	ADC_initIO();
+	//ADC_initIO();
 	ADC_adc1Init();
 
 	DMA2_Init();
@@ -343,13 +352,13 @@ int main(void)
 	while(1)
 	{
 		int krok=1; //stan silnika
-		int
 		int bufor1, bufor2, bufor3, bufor4;
 		value=ADC_GetConversionValue(ADC1);
 		TIM1->CCR1=value;
+		while(1)
 		Rozruch(&krok);
 		//funkcja startuj¹ca silnik
-		if((ADC1->SR & 0x00000002)==1)
+		/*if((ADC1->SR & 0x00000002)==1)
 		{
 			bufor1=(int)(bufor>>48); //faza w
 			bufor2=(int)((bufor & 0x0000111100000000)>>32); //faza v
@@ -420,7 +429,7 @@ int main(void)
 				}
 				break;
 			}
-		}
+		}*/
 			DMA2_Start();
 			//funkcja zmieniaj¹ca wype³nienie pwm
 	}
